@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodOrderApi.Migrations
 {
     [DbContext(typeof(FoodApiDbContext))]
-    [Migration("20230511140221_FoodOrderApi")]
-    partial class FoodOrderApi
+    [Migration("20230517064245_DBMigration1")]
+    partial class DBMigration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,8 @@ namespace FoodOrderApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ProductID")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("ProductID (Numbers)");
 
                     b.Property<int>("RestaurantID")
                         .HasColumnType("INTEGER");
@@ -89,6 +90,36 @@ namespace FoodOrderApi.Migrations
                     b.HasKey("RestaurantID");
 
                     b.ToTable("Restaurants");
+                });
+
+            modelBuilder.Entity("FoodOrderApi.Model.RestaurantWithMenu", b =>
+                {
+                    b.Property<int>("RestaurantID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Menus")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RestaurantLocation")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RestaurantName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RestaurantPhoneNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RestaurantType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RestaurantID");
+
+                    b.ToTable("RestaurantWithMenus");
                 });
 #pragma warning restore 612, 618
         }

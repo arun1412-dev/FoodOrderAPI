@@ -11,8 +11,10 @@ namespace FoodOrderApi.Repository
         }
 
         public DbSet<Restaurant> Restaurants { get; set; }
+
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<RestaurantWithMenu> RestaurantWithMenus { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

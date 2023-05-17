@@ -88,6 +88,36 @@ namespace FoodOrderApi.Migrations
 
                     b.ToTable("Restaurants");
                 });
+
+            modelBuilder.Entity("FoodOrderApi.Model.RestaurantWithMenu", b =>
+                {
+                    b.Property<int>("RestaurantID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Menus")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RestaurantLocation")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("RestaurantName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("RestaurantPhoneNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("RestaurantType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("RestaurantID");
+
+                    b.ToTable("RestaurantWithMenus");
+                });
 #pragma warning restore 612, 618
         }
     }

@@ -8,9 +8,9 @@ namespace FoodOrderApi.Model
         public string CustomerName { get; set; }
 
         [Required]
-        public int RestaurantID { get; set; }
+        public string RestaurantName { get; set; }
 
         [Required]
-        public int ProductID { get; set; }
+        public string ProductName { get; set; }
     }
 }

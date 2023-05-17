@@ -1,10 +1,8 @@
 ﻿namespace FoodOrderApi.Model
 {
-    public class OrderDisplay
+    public class OrderDTOModel
     {
-        //public string CustomerName { get; set; }
         public string RestaurantName { get; set; }
-
         public string RestaurantType { get; set; }
         public int RestaurantPhoneNumber { get; set; }
         public string RestaurantLocation { get; set; }

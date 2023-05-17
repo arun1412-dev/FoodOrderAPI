@@ -22,49 +22,67 @@ namespace FoodOrderApi.Controllers
             return Ok(_dataProvider.GetRestaurant());
         }
 
+        [HttpGet("RestaurantwithMenus")]
+        public ActionResult GetRestaurantWithMenu(string RestrauntName)
+        {
+            return Ok(_dataProvider.GetRestaurantWithMenu(RestrauntName));
+        }
+
         [HttpGet("Menu")]
         public ActionResult GetMenu()
         {
-            return Ok(_dataProvider.GetMenuDisplay());
+            return Ok(_dataProvider.GetMenus());
         }
 
         [HttpPatch("PlaceOrder")]
-        public void PlaceOrder(CustomerDTOModel newCustomerOrder)
+        public ActionResult PlaceOrder(CustomerDTOModel newCustomerOrder)
         {
-            var newOrder = new Order();
-            newOrder.CustomerName = newCustomerOrder.CustomerName;
-            newOrder.RestaurantID = newCustomerOrder.RestaurantID;
-            newOrder.ProductID = newCustomerOrder.ProductID;
-            _dataProvider.PlaceOrder(newOrder);
+            List<Restaurant> restaurants = _dataProvider.GetRestaurant().Where(item => item.RestaurantName.ToLower() == newCustomerOrder.RestaurantName.ToLower()).ToList();
+            if (restaurants.Count() > 0)
+            {
+                List<Menu> products = _dataProvider.GetMenus().Where(item => item.ProductName.ToLower() == newCustomerOrder.ProductName.ToLower()).ToList();
+                if (products.Count() > 0 && products[0].RestaurantID == restaurants[0].RestaurantID)
+                {
+                    var newOrder = new Order();
+                    newOrder.CustomerName = newCustomerOrder.CustomerName;
+                    newOrder.RestaurantID = products[0].RestaurantID;
+                    newOrder.ProductID = products[0].ProductID;
+                    _dataProvider.PlaceOrder(newOrder);
+                    return Ok("Order Placed.");
+                }
+                else
+                {
+                    return NotFound("Product Not found.");
+                }
+            }
+            else
+            {
+                return NotFound("Restaurnt Not found.");
+            }
         }
 
         [HttpGet("Orders/{customerName}")]
         public ActionResult GetOrder(string customerName)
         {
             var customerOrder = _dataProvider.GetOrderByName(customerName).ToList();
-            var orderList = new List<OrderDisplay>();
+            var orderList = new List<OrderDTOModel>();
             if (customerOrder.Count > 0)
             {
                 foreach (Order order in customerOrder)
                 {
-                    foreach (Restaurant restaurant in _dataProvider.GetRestaurant())
+                    foreach (Menu menu in _dataProvider.GetMenus())
                     {
-                        if (restaurant.RestaurantID == order.RestaurantID)
+                        if (menu.RestaurantID == order.RestaurantID && menu.ProductID == order.ProductID)
                         {
-                            foreach (Menu menu in _dataProvider.GetMenuDisplay())
-                            {
-                                if (menu.RestaurantID == order.RestaurantID && menu.ProductID == order.RestaurantID)
-                                {
-                                    var newOrder = new OrderDisplay();
-                                    newOrder.RestaurantName = restaurant.RestaurantName;
-                                    newOrder.ProductName = menu.ProductName;
-                                    newOrder.ProductPrice = menu.ProductPrice;
-                                    newOrder.RestaurantPhoneNumber = restaurant.RestaurantPhoneNumber;
-                                    newOrder.RestaurantLocation = restaurant.RestaurantLocation;
-                                    newOrder.RestaurantType = restaurant.RestaurantType;
-                                    orderList.Add(newOrder);
-                                }
-                            }
+                            var restaurant = _dataProvider.GetRestaurant().Where(item => item.RestaurantID == menu.RestaurantID).ToList();
+                            var newOrder = new OrderDTOModel();
+                            newOrder.RestaurantName = restaurant[0].RestaurantName;
+                            newOrder.ProductName = menu.ProductName;
+                            newOrder.ProductPrice = menu.ProductPrice;
+                            newOrder.RestaurantPhoneNumber = restaurant[0].RestaurantPhoneNumber;
+                            newOrder.RestaurantLocation = restaurant[0].RestaurantLocation;
+                            newOrder.RestaurantType = restaurant[0].RestaurantType;
+                            orderList.Add(newOrder);
                         }
                     }
                 }
@@ -72,7 +90,7 @@ namespace FoodOrderApi.Controllers
             }
             else
             {
-                return BadRequest("Not found");
+                return NotFound("Order Not found.");
             }
         }
 

@@ -7,7 +7,7 @@
 //        //List<Customer> _customerList;
 //        private List<Restaurant> _restaurantList;
 
-//        private List<OrderDisplay> _orderDisplayList;
+//        private List<OrderDTOModel> _orderDisplayList;
 //        public static List<Customer> _CustomerOrder = new List<Customer>();
 //        //List<Customer> _CustomerOrder = new List<Customer>();
 
@@ -76,7 +76,7 @@
 //            }
 //        }
 
-//        //public IEnumerable<OrderDisplay> GetOrderDisplays(Customer order)
+//        //public IEnumerable<OrderDTOModel> GetOrderDisplays(Customer order)
 //        //{
 //        //    return _orderDisplayList;
 //        //}

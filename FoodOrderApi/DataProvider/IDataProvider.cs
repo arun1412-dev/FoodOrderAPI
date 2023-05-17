@@ -5,9 +5,11 @@ namespace FoodOrderApi.DataProvider
 {
     public interface IDataProvider
     {
-        IEnumerable<Menu> GetMenuDisplay();
+        IEnumerable<Menu> GetMenus();
 
         IEnumerable<Restaurant> GetRestaurant();
+
+        IEnumerable<IList<string>> GetRestaurantWithMenu(string restaurantName);
 
         IEnumerable<Order> GetOrderByName(string customerName);
 
