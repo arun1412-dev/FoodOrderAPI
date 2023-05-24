@@ -1,17 +1,16 @@
-﻿using FoodOrderApi.Model;
-using Microsoft.AspNetCore.Mvc;
+﻿using FoodOrderApi.Model.Domain;
 
 namespace FoodOrderApi.DataProvider
 {
     public interface IDataProvider
     {
-        IEnumerable<Menu> GetMenus();
+        Task<IEnumerable<Menu>> GetMenus();
 
-        IEnumerable<Restaurant> GetRestaurant();
+        Task<IEnumerable<Restaurant>> GetRestaurant();
 
-        IEnumerable<IList<string>> GetRestaurantWithMenu(string restaurantName);
+        Task<IList<string>> GetRestaurantWithMenu(string restaurantName);
 
-        IEnumerable<Order> GetOrderByName(string customerName);
+        Task<IEnumerable<Order>> GetOrderByName(string customerName);
 
         void PlaceOrder(Order newCustomerOrder);
 

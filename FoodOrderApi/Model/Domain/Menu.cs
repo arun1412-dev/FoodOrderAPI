@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace FoodOrderApi.Model
+namespace FoodOrderApi.Model.Domain
 {
     public class Menu
     {

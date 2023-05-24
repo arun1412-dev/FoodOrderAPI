@@ -1,4 +1,4 @@
-﻿namespace FoodOrderApi.Model
+﻿namespace FoodOrderApi.Model.Domain
 {
     public class Order
     {
