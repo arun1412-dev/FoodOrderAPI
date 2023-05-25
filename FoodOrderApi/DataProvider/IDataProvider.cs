@@ -8,7 +8,7 @@ namespace FoodOrderApi.DataProvider
 
         Task<IEnumerable<Restaurant>> GetRestaurant();
 
-        Task<IList<string>> GetRestaurantWithMenu(string restaurantName);
+        Task<IList<string>?> GetRestaurantWithMenu(string restaurantName);
 
         Task<IEnumerable<Order>> GetOrderByName(string customerName);
 

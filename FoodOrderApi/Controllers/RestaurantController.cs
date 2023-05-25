@@ -1,7 +1,6 @@
 ﻿using FoodOrderApi.DataProvider;
-using FoodOrderApi.Model.Domain;
-using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrderApi.Controllers
 {
@@ -16,25 +15,32 @@ namespace FoodOrderApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetRestaurant()
+        public async Task<ActionResult> GetRestaurant()
         {
-            return Ok(_dataProvider.GetRestaurant());
+            var restaurants = await _dataProvider.GetRestaurant();
+            return Ok(restaurants.ToList());
         }
 
         [HttpGet("RestaurantwithMenus")]
-        public ActionResult GetRestaurantWithMenu(string RestrauntName)
+        public async Task<ActionResult> GetRestaurantWithMenu([Required] string RestrauntName)
         {
-            return Ok(_dataProvider.GetRestaurantWithMenu(RestrauntName));
+            var restaurantsWithMenu = await _dataProvider.GetRestaurantWithMenu(RestrauntName);
+            if (restaurantsWithMenu == null)
+            {
+                return NotFound("Restaurant not found.");
+            }
+            return Ok(restaurantsWithMenu);
         }
 
         [HttpGet("Menu")]
-        public ActionResult GetMenu()
+        public async Task<ActionResult> GetMenu()
         {
-            return Ok(_dataProvider.GetMenus());
+            var menus = await _dataProvider.GetMenus();
+            return Ok(menus.ToList());
         }
 
-        //[HttpPatch("PlaceOrder")]
-        //public ActionResult PlaceOrder(CustomerDTOModel newCustomerOrder)
+        //[HttpPost("PlaceOrder")]
+        //public ActionResult PlaceOrder(GetOrderDTOModel newCustomerOrder)
         //{
         //    List<Restaurant> restaurants = null; //_dataProvider.GetRestaurant().Where(item => item.RestaurantName.ToLower() == newCustomerOrder.RestaurantName.ToLower()).ToList();
         //    if (restaurants.Count() > 0)
@@ -61,10 +67,10 @@ namespace FoodOrderApi.Controllers
         //}
 
         //[HttpGet("Orders/{customerName}")]
-        //public ActionResult GetOrder(string customerName)
+        //public ActionResult Order(string customerName)
         //{
         //    var customerOrder = _dataProvider.GetOrderByName(customerName).ToList();
-        //    var orderList = new List<OrderDTOModel>();
+        //    var orderList = new List<DisplayOrderDTOModel>();
         //    if (customerOrder.Count > 0)
         //    {
         //        foreach (Order order in customerOrder)
@@ -74,7 +80,7 @@ namespace FoodOrderApi.Controllers
         //                if (menu.RestaurantID == order.RestaurantID && menu.ProductID == order.ProductID)
         //                {
         //                    var restaurant = _dataProvider.GetRestaurant().Where(item => item.RestaurantID == menu.RestaurantID).ToList();
-        //                    var newOrder = new OrderDTOModel();
+        //                    var newOrder = new DisplayOrderDTOModel();
         //                    newOrder.RestaurantName = restaurant[0].RestaurantName;
         //                    newOrder.ProductName = menu.ProductName;
         //                    newOrder.ProductPrice = menu.ProductPrice;

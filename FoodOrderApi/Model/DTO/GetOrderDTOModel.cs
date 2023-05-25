@@ -2,7 +2,7 @@
 
 namespace FoodOrderApi.Model.DTO
 {
-    public class CustomerDTOModel
+    public class GetOrderDTO
     {
         [Required]
         public string CustomerName { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace FoodOrderApi.Model.Domain
 {
@@ -9,7 +10,7 @@ namespace FoodOrderApi.Model.Domain
         }
 
         [JsonConstructor]
-        public Menu(int productID, int restaurantID, string productName, string productPrice)
+        public Menu(Guid productID, Guid restaurantID, string productName, string productPrice)
         {
             ProductID = productID;
             RestaurantID = restaurantID;
@@ -17,9 +18,10 @@ namespace FoodOrderApi.Model.Domain
             ProductPrice = productPrice;
         }
 
-        public int Id { get; set; }
-        public int ProductID { get; set; }
-        public int RestaurantID { get; set; }
+        [Key]
+        public Guid ProductID { get; set; }
+
+        public Guid RestaurantID { get; set; }
         public string ProductName { get; set; }
         public string ProductPrice { get; set; }
     }

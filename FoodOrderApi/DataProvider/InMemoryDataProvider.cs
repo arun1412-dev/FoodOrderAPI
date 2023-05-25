@@ -7,7 +7,7 @@
 ////        //List<Customer> _customerList;
 ////        private List<Restaurant> _restaurantList;
 
-////        private List<OrderDTOModel> _orderDisplayList;
+////        private List<DisplayOrderDTOModel> _orderDisplayList;
 ////        public static List<Customer> _CustomerOrder = new List<Customer>();
 ////        //List<Customer> _CustomerOrder = new List<Customer>();
 
@@ -137,7 +137,7 @@
 ////            _menuList.Add(4, new List<Menu>() { new Menu() { ProductID = 1, ProductName = "Vegetable Club Sandwich", ProductPrice = "150" }, new Menu() { ProductID = 2, ProductName = "Veg Combo Meal", ProductPrice = "439" }, new Menu() { ProductID = 3, ProductName = "Orbis Signature Rice", ProductPrice = "250" } });
 ////        }
 
-////        public IEnumerable<Customer> GetOrder(string customerName)
+////        public IEnumerable<Customer> Order(string customerName)
 ////        {
 ////            return _CustomerOrder;
 ////        }
@@ -174,7 +174,7 @@
 ////            }
 ////        }
 
-////        //public IEnumerable<OrderDTOModel> GetOrderDisplays(Customer order)
+////        //public IEnumerable<DisplayOrderDTOModel> GetOrderDisplays(Customer order)
 ////        //{
 ////        //    return _orderDisplayList;
 ////        //}
@@ -189,7 +189,7 @@
 ////            _CustomerOrder.Add(newCustomerOrder);
 ////        }
 
-////        //public IEnumerable<Menu> GetOrder()
+////        //public IEnumerable<Menu> Order()
 ////        //{
 ////        //    return _CustomerOrder;
 ////        //}

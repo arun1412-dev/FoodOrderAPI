@@ -5,7 +5,7 @@ namespace FoodOrderApi.Model.Domain
     public class RestaurantWithMenu
     {
         [Key]
-        public int RestaurantID { get; set; }
+        public Guid RestaurantID { get; set; }
 
         public string RestaurantName { get; set; }
         public string RestaurantType { get; set; }

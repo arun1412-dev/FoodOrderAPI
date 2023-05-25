@@ -1,18 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace FoodOrderApi.Model.Domain
+namespace FoodOrderApi.Model.DTO
 {
-    public class Restaurant
+    public class RestaurantDTO
     {
         [Key]
-        public Guid RestaurantID { get; set; }
+        public int RestaurantID { get; set; }
 
         public string RestaurantName { get; set; }
         public string RestaurantType { get; set; }
         public int RestaurantPhoneNumber { get; set; }
         public string RestaurantLocation { get; set; }
-
-        //Navigation
-        //public Menu Menu { get; set; }
     }
 }
