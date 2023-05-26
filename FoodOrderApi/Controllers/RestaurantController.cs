@@ -1,5 +1,10 @@
-﻿using FoodOrderApi.DataProvider;
+﻿using AutoMapper;
+using FoodOrderApi.DataProvider;
+using FoodOrderApi.Model.Domain;
+using FoodOrderApi.Model.DTO;
+using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.Mvc;
+using ServiceStack;
 using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrderApi.Controllers
@@ -8,17 +13,21 @@ namespace FoodOrderApi.Controllers
     public class RestaurantController : ControllerBase
     {
         private IDataProvider _dataProvider;
+        private readonly IMapper mapper;
 
-        public RestaurantController(IDataProvider dataProvider)
+        public RestaurantController(IDataProvider dataProvider, IMapper mapper)
         {
             _dataProvider = dataProvider;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult> GetRestaurant()
         {
             var restaurants = await _dataProvider.GetRestaurant();
-            return Ok(restaurants.ToList());
+
+            var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(restaurants.ToList());
+            return Ok(restaurantMapper);
         }
 
         [HttpGet("RestaurantwithMenus")]
@@ -29,42 +38,30 @@ namespace FoodOrderApi.Controllers
             {
                 return NotFound("Restaurant not found.");
             }
-            return Ok(restaurantsWithMenu);
+            var restaurantMapper = mapper.Map<List<string>>(restaurantsWithMenu.ToList());
+            return Ok(restaurantMapper);
         }
 
         [HttpGet("Menu")]
         public async Task<ActionResult> GetMenu()
         {
-            var menus = await _dataProvider.GetMenus();
-            return Ok(menus.ToList());
+            var menus = await (_dataProvider.GetMenus());
+            var menusMapper = mapper.Map<List<DisplayMenuDTO>>(menus.ToList());
+            var listOfRestaurants = (await _dataProvider.GetRestaurant()).ToList();
+            for (int menuindex = 0; menuindex < menus.Count(); menuindex++)
+            {
+                menusMapper[menuindex].RestaurantName = listOfRestaurants
+                    .FirstOrDefault(x => x.RestaurantID == menus.ToList()[menuindex].RestaurantID).RestaurantName;
+            }
+            return Ok(menusMapper);
         }
 
-        //[HttpPost("PlaceOrder")]
-        //public ActionResult PlaceOrder(GetOrderDTOModel newCustomerOrder)
-        //{
-        //    List<Restaurant> restaurants = null; //_dataProvider.GetRestaurant().Where(item => item.RestaurantName.ToLower() == newCustomerOrder.RestaurantName.ToLower()).ToList();
-        //    if (restaurants.Count() > 0)
-        //    {
-        //        List<Menu> products = _dataProvider.GetMenus().Where(item => item.ProductName.ToLower() == newCustomerOrder.ProductName.ToLower()).ToList();
-        //        if (products.Count() > 0 && products[0].RestaurantID == restaurants[0].RestaurantID)
-        //        {
-        //            var newOrder = new Order();
-        //            newOrder.CustomerName = newCustomerOrder.CustomerName;
-        //            newOrder.RestaurantID = products[0].RestaurantID;
-        //            newOrder.ProductID = products[0].ProductID;
-        //            _dataProvider.PlaceOrder(newOrder);
-        //            return Ok("Order Placed.");
-        //        }
-        //        else
-        //        {
-        //            return NotFound("Product Not found.");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Restaurnt Not found.");
-        //    }
-        //}
+        [HttpPost("PlaceOrder")]
+        public ActionResult PlaceOrder(GetOrderDTO newCustomerOrder)
+        {
+            var OrderDetails = _dataProvider.PlaceOrder(newCustomerOrder);
+            return Ok(OrderDetails);
+        }
 
         //[HttpGet("Orders/{customerName}")]
         //public ActionResult Order(string customerName)

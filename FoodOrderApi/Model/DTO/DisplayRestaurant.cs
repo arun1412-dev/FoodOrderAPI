@@ -2,6 +2,7 @@
 {
     public class DisplayRestaurantDTO
     {
+        
         public string RestaurantName { get; set; }
         public string RestaurantType { get; set; }
         public int RestaurantPhoneNumber { get; set; }

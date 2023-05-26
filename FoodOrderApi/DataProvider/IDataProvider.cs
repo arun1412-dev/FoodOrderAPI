@@ -1,4 +1,5 @@
 ﻿using FoodOrderApi.Model.Domain;
+using FoodOrderApi.Model.DTO;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -12,7 +13,7 @@ namespace FoodOrderApi.DataProvider
 
         Task<IEnumerable<Order>> GetOrderByName(string customerName);
 
-        void PlaceOrder(Order newCustomerOrder);
+        Task<Order?> PlaceOrder(GetOrderDTO newCustomerOrder);
 
         void DeleteOrder(Order newCustomerOrder);
     }

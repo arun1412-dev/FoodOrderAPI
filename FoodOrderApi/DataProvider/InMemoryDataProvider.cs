@@ -58,7 +58,7 @@
 
 //public void AddRestaruntWithMenu()
 //{
-//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenu()
+//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenuDTO()
 //    {
 //        RestaurantID = 1,
 //        RestaurantName = "Kove",
@@ -68,7 +68,7 @@
 
 //        Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
 //    });
-//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenu()
+//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenuDTO()
 //    {
 //        RestaurantID = 2,
 //        RestaurantName = "Annapoorna",
@@ -78,7 +78,7 @@
 //        Menus = new List<string> { "Idly(2)", "Pongal", "Roast" }
 //    });
 
-//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenu()
+//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenuDTO()
 //    {
 //        RestaurantID = 3,
 //        RestaurantName = "Chocolate Room",
@@ -88,7 +88,7 @@
 //        Menus = new List<string> { "Chocolate Sizzler", "Choco Brownie Bomb", "Chocolate Cookies" }
 //    });
 
-//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenu()
+//    foodApiDbContext.RestaurantWithMenus.Add(new RestaurantWithMenuDTO()
 //    {
 //        RestaurantID = 4,
 //        RestaurantName = "Orbis",

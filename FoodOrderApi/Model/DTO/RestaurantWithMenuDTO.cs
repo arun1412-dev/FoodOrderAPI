@@ -2,7 +2,7 @@
 
 namespace FoodOrderApi.Model.DTO
 {
-    public class RestaurantWithMenu
+    public class RestaurantWithMenuDTO
     {
         [Key]
         public int RestaurantID { get; set; }

@@ -1,4 +1,5 @@
 using FoodOrderApi.DataProvider;
+using FoodOrderApi.Mappings;
 using FoodOrderApi.Repository;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //adding food order api
 builder.Services.AddFoodOrderApi();
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddDbContext<FoodApiDbContext>(options =>
     options.UseSqlite("Data Source = foodorder.db"));
 //builder.Services.AddSingleton<IDataProvider, InMemoryDataProvider>();
