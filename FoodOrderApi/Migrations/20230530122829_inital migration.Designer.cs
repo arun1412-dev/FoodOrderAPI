@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodOrderApi.Migrations
 {
     [DbContext(typeof(FoodApiDbContext))]
-    [Migration("20230525092937_intial commit")]
-    partial class intialcommit
+    [Migration("20230530122829_inital migration")]
+    partial class initalmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -128,7 +128,7 @@ namespace FoodOrderApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FoodOrderApi.Model.Domain.OrderModel", b =>
+            modelBuilder.Entity("FoodOrderApi.Model.Domain.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,9 +136,6 @@ namespace FoodOrderApi.Migrations
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("MenuProductID")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("ProductID")
@@ -150,7 +147,7 @@ namespace FoodOrderApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MenuProductID");
+                    b.HasIndex("ProductID");
 
                     b.HasIndex("RestaurantID");
 
@@ -285,11 +282,11 @@ namespace FoodOrderApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("FoodOrderApi.Model.Domain.OrderModel", b =>
+            modelBuilder.Entity("FoodOrderApi.Model.Domain.Order", b =>
                 {
                     b.HasOne("FoodOrderApi.Model.Domain.Menu", "Menu")
                         .WithMany()
-                        .HasForeignKey("MenuProductID")
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

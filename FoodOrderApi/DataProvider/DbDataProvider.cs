@@ -26,7 +26,7 @@ namespace FoodOrderApi.DataProvider
 
         public async Task<IEnumerable<Order>?> GetOrderByName(string customerName)
         {
-            return await foodApiDbContext.Orders.Where(item => item.CustomerName == customerName).ToListAsync();
+            return await foodApiDbContext.Orders.Where(item => item.CustomerName == customerName).Include("Menu").Include("Restaurant").ToListAsync();
         }
 
         public async Task<IEnumerable<Restaurant>> GetRestaurant()
@@ -58,8 +58,8 @@ namespace FoodOrderApi.DataProvider
                     var newOrder = mapper.Map<Order>(newCustomerOrder);
                     newOrder.RestaurantID = products[0].RestaurantID;
                     newOrder.ProductID = products[0].ProductID;
-                    foodApiDbContext.Orders.Add(newOrder);
-                    foodApiDbContext.SaveChanges();
+                    await foodApiDbContext.Orders.AddAsync(newOrder);
+                    await foodApiDbContext.SaveChangesAsync();
                     return newOrder;
                 }
             }

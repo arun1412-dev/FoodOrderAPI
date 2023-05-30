@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -7,7 +8,7 @@
 namespace FoodOrderApi.Migrations
 {
     /// <inheritdoc />
-    public partial class intialcommit : Migration
+    public partial class initalmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,15 +65,14 @@ namespace FoodOrderApi.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     RestaurantID = table.Column<Guid>(type: "TEXT", nullable: false),
                     ProductIDNumbers = table.Column<Guid>(name: "ProductID (Numbers)", type: "TEXT", nullable: false),
-                    CustomerName = table.Column<string>(type: "TEXT", nullable: false),
-                    MenuProductID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    CustomerName = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Orders_Menus_MenuProductID",
-                        column: x => x.MenuProductID,
+                        name: "FK_Orders_Menus_ProductID (Numbers)",
+                        column: x => x.ProductIDNumbers,
                         principalTable: "Menus",
                         principalColumn: "ProductID",
                         onDelete: ReferentialAction.Cascade);
@@ -126,9 +126,9 @@ namespace FoodOrderApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_MenuProductID",
+                name: "IX_Orders_ProductID (Numbers)",
                 table: "Orders",
-                column: "MenuProductID");
+                column: "ProductID (Numbers)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_RestaurantID",

@@ -1,4 +1,6 @@
-﻿namespace FoodOrderApi.Model.Domain
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FoodOrderApi.Model.Domain
 {
     public class Order
     {
@@ -7,9 +9,9 @@
         public Guid ProductID { get; set; }
         public string CustomerName { get; set; }
 
-        //Navigation
         public Restaurant Restaurant { get; set; }
 
+        [ForeignKey("ProductID")]
         public Menu Menu { get; set; }
     }
 }

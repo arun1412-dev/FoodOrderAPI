@@ -4,14 +4,11 @@ namespace FoodOrderApi.Model.DTO
 {
     public class OrderDTO
     {
-        public int Id { get; set; }
-        public Guid RestaurantID { get; set; }
-        public Guid ProductID { get; set; }
-        public string CustomerName { get; set; }
+        public Guid OrderID { get; set; }
 
         //Navigation
-        public Restaurant Restaurant { get; set; }
+        public RestaurantDTO Restaurant { get; set; }
 
-        public Menu Menu { get; set; }
+        public MenuDTO Menu { get; set; }
     }
 }

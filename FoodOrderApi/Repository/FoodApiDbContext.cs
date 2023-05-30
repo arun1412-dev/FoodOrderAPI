@@ -1,5 +1,6 @@
 ﻿using FoodOrderApi.Model.Domain;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace FoodOrderApi.Repository
@@ -19,6 +20,7 @@ namespace FoodOrderApi.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
             base.OnModelCreating(modelBuilder);
             // Seed data for Restaurants
             var restaurants = new List<Restaurant>()

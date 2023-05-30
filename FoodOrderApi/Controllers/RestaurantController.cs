@@ -57,44 +57,22 @@ namespace FoodOrderApi.Controllers
         }
 
         [HttpPost("PlaceOrder")]
-        public ActionResult PlaceOrder(GetOrderDTO newCustomerOrder)
+        public async Task<ActionResult> PlaceOrder(GetOrderDTO newCustomerOrder)
         {
-            var OrderDetails = _dataProvider.PlaceOrder(newCustomerOrder);
-            return Ok(OrderDetails);
+            var OrderDetails = await _dataProvider.PlaceOrder(newCustomerOrder);
+            return Ok(mapper.Map<OrderDTO>(OrderDetails));
         }
 
-        //[HttpGet("Orders/{customerName}")]
-        //public ActionResult Order(string customerName)
-        //{
-        //    var customerOrder = _dataProvider.GetOrderByName(customerName).ToList();
-        //    var orderList = new List<DisplayOrderDTOModel>();
-        //    if (customerOrder.Count > 0)
-        //    {
-        //        foreach (Order order in customerOrder)
-        //        {
-        //            foreach (Menu menu in _dataProvider.GetMenus())
-        //            {
-        //                if (menu.RestaurantID == order.RestaurantID && menu.ProductID == order.ProductID)
-        //                {
-        //                    var restaurant = _dataProvider.GetRestaurant().Where(item => item.RestaurantID == menu.RestaurantID).ToList();
-        //                    var newOrder = new DisplayOrderDTOModel();
-        //                    newOrder.RestaurantName = restaurant[0].RestaurantName;
-        //                    newOrder.ProductName = menu.ProductName;
-        //                    newOrder.ProductPrice = menu.ProductPrice;
-        //                    newOrder.RestaurantPhoneNumber = restaurant[0].RestaurantPhoneNumber;
-        //                    newOrder.RestaurantLocation = restaurant[0].RestaurantLocation;
-        //                    newOrder.RestaurantType = restaurant[0].RestaurantType;
-        //                    orderList.Add(newOrder);
-        //                }
-        //            }
-        //        }
-        //        return Ok(orderList);
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Order Not found.");
-        //    }
-        //}
+        [HttpGet("Orders/{customerName}")]
+        public async Task<ActionResult> GetOrders([Required] string customerName)
+        {
+            var getOrders = await _dataProvider.GetOrderByName(customerName);
+            if (getOrders == null)
+            {
+                return NotFound("Orders not found.");
+            }
+            return Ok(mapper.Map<IEnumerable<OrderDTO>>(getOrders));
+        }
 
         //[HttpDelete("DeleteOrder/{customerName}")]
         //public ActionResult DeleteOrder(string customerName, string restrauntID, string productID)
