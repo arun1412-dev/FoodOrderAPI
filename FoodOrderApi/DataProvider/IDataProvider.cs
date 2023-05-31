@@ -15,6 +15,6 @@ namespace FoodOrderApi.DataProvider
 
         Task<Order?> PlaceOrder(GetOrderDTO newCustomerOrder);
 
-        void DeleteOrder(Order newCustomerOrder);
+        Task<bool> OrderDelivered(Guid CustomerOrderId);
     }
 }

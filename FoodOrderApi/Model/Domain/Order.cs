@@ -8,6 +8,7 @@ namespace FoodOrderApi.Model.Domain
         public Guid RestaurantID { get; set; }
         public Guid ProductID { get; set; }
         public string CustomerName { get; set; }
+        public bool IsDelivered { get; set; }
 
         public Restaurant Restaurant { get; set; }
 

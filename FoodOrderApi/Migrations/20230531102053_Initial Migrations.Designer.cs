@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodOrderApi.Migrations
 {
     [DbContext(typeof(FoodApiDbContext))]
-    [Migration("20230530122829_inital migration")]
-    partial class initalmigration
+    [Migration("20230531102053_Initial Migrations")]
+    partial class InitialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,6 +137,9 @@ namespace FoodOrderApi.Migrations
                     b.Property<string>("CustomerName")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnType("INTEGER");
 
                     b.Property<Guid>("ProductID")
                         .HasColumnType("TEXT")

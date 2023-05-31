@@ -135,6 +135,9 @@ namespace FoodOrderApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDelivered")
+                        .HasColumnType("INTEGER");
+
                     b.Property<Guid>("ProductID")
                         .HasColumnType("TEXT")
                         .HasColumnName("ProductID (Numbers)");

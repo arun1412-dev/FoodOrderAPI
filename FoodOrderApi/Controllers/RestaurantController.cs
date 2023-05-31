@@ -9,23 +9,26 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrderApi.Controllers
 {
-    [Route("Restaurants")]
+    [Route("Restaurant")]
     public class RestaurantController : ControllerBase
     {
         private IDataProvider _dataProvider;
         private readonly IMapper mapper;
+        private readonly ILogger logger;
 
-        public RestaurantController(IDataProvider dataProvider, IMapper mapper)
+        public RestaurantController(IDataProvider dataProvider, IMapper mapper, ILogger<RestaurantController> logger)
         {
             _dataProvider = dataProvider;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
+        //[HttpGet("Restaurants.{format}"), FormatFilter]
         [HttpGet]
         public async Task<ActionResult> GetRestaurant()
         {
             var restaurants = await _dataProvider.GetRestaurant();
-
+            logger.LogInformation("success");
             var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(restaurants.ToList());
             return Ok(restaurantMapper);
         }
@@ -59,7 +62,10 @@ namespace FoodOrderApi.Controllers
         [HttpPost("PlaceOrder")]
         public async Task<ActionResult> PlaceOrder(GetOrderDTO newCustomerOrder)
         {
+            //await Response.Body.WriteAsync("ArunAar");
+
             var OrderDetails = await _dataProvider.PlaceOrder(newCustomerOrder);
+            Console.WriteLine("Order Placed");
             return Ok(mapper.Map<OrderDTO>(OrderDetails));
         }
 
@@ -74,31 +80,18 @@ namespace FoodOrderApi.Controllers
             return Ok(mapper.Map<IEnumerable<OrderDTO>>(getOrders));
         }
 
-        //[HttpDelete("DeleteOrder/{customerName}")]
-        //public ActionResult DeleteOrder(string customerName, string restrauntID, string productID)
-        //{
-        //    bool flag = true;
-        //    var customerOrder = _dataProvider.GetOrderByName(customerName).ToList();
-        //    if (customerOrder.Count > 0)
-        //    {
-        //        foreach (Order order in customerOrder)
-        //        {
-        //            if (order.RestaurantID.ToString() == restrauntID && order.ProductID.ToString() == productID)
-        //            {
-        //                _dataProvider.DeleteOrder(order);
-        //                flag = false;
-        //            }
-        //        }
-        //        if (flag)
-        //        {
-        //            return NotFound("Can't able to found the Order.");
-        //        }
-        //        return Ok("Success");
-        //    }
-        //    else
-        //    {
-        //        return NotFound("Can't able to found the Order.");
-        //    }
-        //}
+        [HttpDelete("OrderDelivered/{orderId}")]
+        public async Task<ActionResult> OrderDelivered(Guid orderId)
+        {
+            var IsDelivered = _dataProvider.OrderDelivered(orderId);
+            if (IsDelivered.Result)
+            {
+                return Ok("Success");
+            }
+            else
+            {
+                return NotFound("Can't able to found the Order.");
+            }
+        }
     }
 }

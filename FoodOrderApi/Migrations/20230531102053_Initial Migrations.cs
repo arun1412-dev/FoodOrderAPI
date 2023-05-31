@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FoodOrderApi.Migrations
 {
     /// <inheritdoc />
-    public partial class initalmigration : Migration
+    public partial class InitialMigrations : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -65,7 +65,8 @@ namespace FoodOrderApi.Migrations
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     RestaurantID = table.Column<Guid>(type: "TEXT", nullable: false),
                     ProductIDNumbers = table.Column<Guid>(name: "ProductID (Numbers)", type: "TEXT", nullable: false),
-                    CustomerName = table.Column<string>(type: "TEXT", nullable: false)
+                    CustomerName = table.Column<string>(type: "TEXT", nullable: false),
+                    IsDelivered = table.Column<bool>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -58,6 +58,7 @@ namespace FoodOrderApi.DataProvider
                     var newOrder = mapper.Map<Order>(newCustomerOrder);
                     newOrder.RestaurantID = products[0].RestaurantID;
                     newOrder.ProductID = products[0].ProductID;
+                    newOrder.IsDelivered = false;
                     await foodApiDbContext.Orders.AddAsync(newOrder);
                     await foodApiDbContext.SaveChangesAsync();
                     return newOrder;
@@ -66,10 +67,16 @@ namespace FoodOrderApi.DataProvider
             return null;
         }
 
-        public void DeleteOrder(Order newCustomerOrder)
+        public async Task<bool> OrderDelivered(Guid CustomerOrderId)
         {
-            foodApiDbContext.Orders.Remove(newCustomerOrder);
+            var CustomerOrder = await foodApiDbContext.Orders.FirstOrDefaultAsync(item => item.Id == CustomerOrderId);
+            if (CustomerOrder == null)
+            {
+                return false;
+            }
+            CustomerOrder.IsDelivered = true;
             foodApiDbContext.SaveChanges();
+            return true;
         }
 
         public void PlaceOrder(Order newCustomerOrder)
