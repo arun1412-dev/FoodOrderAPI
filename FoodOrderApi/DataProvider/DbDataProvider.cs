@@ -47,24 +47,36 @@ namespace FoodOrderApi.DataProvider
             }
         }
 
-        public async Task<Order?> PlaceOrder(GetOrderDTO newCustomerOrder)
+        public async Task<List<Order>?> PlaceOrder(List<GetOrderDTO> newCustomerOrder)
         {
-            var restaurants = (await GetRestaurant()).ToList().Where(item => item.RestaurantName.ToLower() == newCustomerOrder.RestaurantName.ToLower()).ToList();
-            if (restaurants.Count() > 0)
+            var orderList = new List<Order>();
+            foreach (var customerOrder in newCustomerOrder)
             {
-                var products = (await GetMenus()).Where(item => item.ProductName.ToLower() == newCustomerOrder.ProductName.ToLower()).ToList();
-                if (products.Count() > 0 && products[0].RestaurantID == restaurants[0].RestaurantID)
+                var restaurants = (await GetRestaurant()).ToList().Where(item => item.RestaurantName.ToLower() == customerOrder.RestaurantName.ToLower()).ToList();
+                if (restaurants.Count() > 0)
                 {
-                    var newOrder = mapper.Map<Order>(newCustomerOrder);
-                    newOrder.RestaurantID = products[0].RestaurantID;
-                    newOrder.ProductID = products[0].ProductID;
-                    newOrder.IsDelivered = false;
-                    await foodApiDbContext.Orders.AddAsync(newOrder);
-                    await foodApiDbContext.SaveChangesAsync();
-                    return newOrder;
+                    var products = (await GetMenus()).Where(item => (item.ProductName.ToLower() == customerOrder.ProductName.ToLower()) && (item.RestaurantID == restaurants[0].RestaurantID)).ToList();
+                    if (products.Count() > 0)
+                    {
+                        var newOrder = mapper.Map<Order>(customerOrder);
+                        newOrder.RestaurantID = products[0].RestaurantID;
+                        newOrder.ProductID = products[0].ProductID;
+                        newOrder.IsDelivered = false;
+                        await foodApiDbContext.Orders.AddAsync(newOrder);
+                        await foodApiDbContext.SaveChangesAsync();
+                        orderList.Add(newOrder);
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+                else
+                {
+                    return null;
                 }
             }
-            return null;
+            return orderList;
         }
 
         public async Task<bool> OrderDelivered(Guid CustomerOrderId)
@@ -77,11 +89,6 @@ namespace FoodOrderApi.DataProvider
             CustomerOrder.IsDelivered = true;
             foodApiDbContext.SaveChanges();
             return true;
-        }
-
-        public void PlaceOrder(Order newCustomerOrder)
-        {
-            throw new NotImplementedException();
         }
     }
 }

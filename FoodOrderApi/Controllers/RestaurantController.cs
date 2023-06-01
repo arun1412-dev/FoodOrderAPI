@@ -28,8 +28,8 @@ namespace FoodOrderApi.Controllers
         public async Task<ActionResult> GetRestaurant()
         {
             var restaurants = await _dataProvider.GetRestaurant();
-            logger.LogInformation("success");
             var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(restaurants.ToList());
+            logger.LogInformation("Data fetched from the restaurant table.");
             return Ok(restaurantMapper);
         }
 
@@ -39,9 +39,11 @@ namespace FoodOrderApi.Controllers
             var restaurantsWithMenu = await _dataProvider.GetRestaurantWithMenu(RestrauntName);
             if (restaurantsWithMenu == null)
             {
+                logger.LogError("Restaurant not found in the database.");
                 return NotFound("Restaurant not found.");
             }
             var restaurantMapper = mapper.Map<List<string>>(restaurantsWithMenu.ToList());
+            logger.LogInformation("Data fetched from the Restaurant with Menu table.");
             return Ok(restaurantMapper);
         }
 
@@ -56,17 +58,22 @@ namespace FoodOrderApi.Controllers
                 menusMapper[menuindex].RestaurantName = listOfRestaurants
                     .FirstOrDefault(x => x.RestaurantID == menus.ToList()[menuindex].RestaurantID).RestaurantName;
             }
+            logger.LogInformation("Data fetched from the Menu table.");
             return Ok(menusMapper);
         }
 
         [HttpPost("PlaceOrder")]
-        public async Task<ActionResult> PlaceOrder(GetOrderDTO newCustomerOrder)
+        public async Task<ActionResult> PlaceOrder([FromBody] List<GetOrderDTO> newCustomerOrder)
         {
-            //await Response.Body.WriteAsync("ArunAar");
-
+            var newor = newCustomerOrder;
             var OrderDetails = await _dataProvider.PlaceOrder(newCustomerOrder);
-            Console.WriteLine("Order Placed");
-            return Ok(mapper.Map<OrderDTO>(OrderDetails));
+            if (OrderDetails == null)
+            {
+                logger.LogError("Can't able to add data as they are invalid.");
+                return BadRequest();
+            }
+            logger.LogInformation("Data added to the Orders Table.");
+            return Ok(mapper.Map<List<OrderDTO>>(OrderDetails));
         }
 
         [HttpGet("Orders/{customerName}")]
@@ -75,8 +82,10 @@ namespace FoodOrderApi.Controllers
             var getOrders = await _dataProvider.GetOrderByName(customerName);
             if (getOrders == null)
             {
+                logger.LogInformation("Orders not found for the particular person.");
                 return NotFound("Orders not found.");
             }
+            logger.LogInformation("Data fetched from the Orders Table.");
             return Ok(mapper.Map<IEnumerable<OrderDTO>>(getOrders));
         }
 
@@ -86,10 +95,12 @@ namespace FoodOrderApi.Controllers
             var IsDelivered = _dataProvider.OrderDelivered(orderId);
             if (IsDelivered.Result)
             {
+                logger.LogInformation("Order delivered and changed in the database.");
                 return Ok("Success");
             }
             else
             {
+                logger.LogInformation("Order not found.");
                 return NotFound("Can't able to found the Order.");
             }
         }

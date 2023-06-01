@@ -13,7 +13,7 @@ namespace FoodOrderApi.DataProvider
 
         Task<IEnumerable<Order>> GetOrderByName(string customerName);
 
-        Task<Order?> PlaceOrder(GetOrderDTO newCustomerOrder);
+        Task<List<Order>?> PlaceOrder(List<GetOrderDTO> newCustomerOrder);
 
         Task<bool> OrderDelivered(Guid CustomerOrderId);
     }
