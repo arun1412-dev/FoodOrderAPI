@@ -16,5 +16,11 @@ namespace FoodOrderApi.DataProvider
         Task<List<Order>?> PlaceOrder(List<GetOrderDTO> newCustomerOrder);
 
         Task<bool> OrderDelivered(Guid CustomerOrderId);
+
+        Task<IEnumerable<Restaurant>> FilterRestaurant(string? filterString = null);
+
+        Task<RestaurantsandMenusDTO> SearchMenuAndRestaurant(string searchString);
+
+        Task<bool> DeleteMenu(Guid MenuID);
     }
 }

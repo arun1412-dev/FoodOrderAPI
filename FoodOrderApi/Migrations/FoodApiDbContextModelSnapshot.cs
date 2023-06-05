@@ -36,6 +36,8 @@ namespace FoodOrderApi.Migrations
 
                     b.HasKey("ProductID");
 
+                    b.HasIndex("RestaurantID");
+
                     b.ToTable("Menus");
 
                     b.HasData(
@@ -534,6 +536,17 @@ namespace FoodOrderApi.Migrations
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Multi Cuisine"
                         });
+                });
+
+            modelBuilder.Entity("FoodOrderApi.Model.Domain.Menu", b =>
+                {
+                    b.HasOne("FoodOrderApi.Model.Domain.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("FoodOrderApi.Model.Domain.Order", b =>

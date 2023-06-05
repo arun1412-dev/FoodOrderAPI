@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,25 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FoodOrderApi.Migrations
 {
     /// <inheritdoc />
-    public partial class intialmigrations : Migration
+    public partial class initalcommit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Menus",
-                columns: table => new
-                {
-                    ProductID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    RestaurantID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductName = table.Column<string>(type: "TEXT", nullable: false),
-                    ProductPrice = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Menus", x => x.ProductID);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Restaurants",
                 columns: table => new
@@ -61,6 +46,26 @@ namespace FoodOrderApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Menus",
+                columns: table => new
+                {
+                    ProductID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    RestaurantID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductName = table.Column<string>(type: "TEXT", nullable: false),
+                    ProductPrice = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menus", x => x.ProductID);
+                    table.ForeignKey(
+                        name: "FK_Menus_Restaurants_RestaurantID",
+                        column: x => x.RestaurantID,
+                        principalTable: "Restaurants",
+                        principalColumn: "RestaurantID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -85,6 +90,40 @@ namespace FoodOrderApi.Migrations
                         principalTable: "Restaurants",
                         principalColumn: "RestaurantID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "RestaurantWithMenus",
+                columns: new[] { "RestaurantID", "Menus", "RestaurantLocation", "RestaurantName", "RestaurantOffer", "RestaurantPhoneNumber", "RestaurantType" },
+                values: new object[,]
+                {
+                    { new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Jupiter", "KB Bhavan", 8.0, 1234567890, "Fine Dining" },
+                    { new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"), "Vegetable Club Sandwich,Veg Combo Meal,Orbis Signature Rice\r\n", "Avinashi Road", "Orbis", 20.0, 1234567890, "Multi Cuisine" },
+                    { new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Mars", "Mario Hotel", 14.199999999999999, 1234567890, "Fine Dining" },
+                    { new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"), "Chocolate Sizzler,Choco Brownie Bomb,Chocolate Cookies\r\n", "Race Course Road", "Chocolate Room", 25.5, 1234567890, "Desserts and Beerages" },
+                    { new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"), "Idly(2),Pongal,Roast\r\n", "RS Puram", "Annapoorna", 24.0, 1234567890, "Casual Dining" },
+                    { new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Kalpakam", "Arya Bhavan", 11.4, 1234567890, "Fine Dining" },
+                    { new Guid("baad586a-accf-4433-98f0-2f861e683354"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Ramanathpuram", "Kove", 10.0, 1234567890, "Fine Dining" },
+                    { new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Perambur", "Adyar Anadha Bhavan", 12.5, 1234567890, "Fine Dining" },
+                    { new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Pluto", "SMS Hotel", 12.0, 1234567890, "Fine Dining" },
+                    { new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Peelamedu", "Anadha Bhavan", 17.699999999999999, 1234567890, "Fine Dining" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Restaurants",
+                columns: new[] { "RestaurantID", "RestaurantLocation", "RestaurantName", "RestaurantOffer", "RestaurantPhoneNumber", "RestaurantType" },
+                values: new object[,]
+                {
+                    { new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"), "Jupiter", "KB Bhavan", 8.0, 1234567890, "Fine Dining" },
+                    { new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"), "Avinashi Road", "Orbis", 20.0, 1234567890, "Multi Cuisine" },
+                    { new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"), "Mars", "Mario Hotel", 14.199999999999999, 1234567890, "Fine Dining" },
+                    { new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"), "Race Course Road", "Chocolate Room", 25.5, 1234567890, "Desserts and Beerages" },
+                    { new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"), "RS Puram", "Annapoorna", 24.0, 1234567890, "Casual Dining" },
+                    { new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"), "Kalpakam", "Arya Bhavan", 11.4, 1234567890, "Fine Dining" },
+                    { new Guid("baad586a-accf-4433-98f0-2f861e683354"), "Ramanathpuram", "Kove", 10.0, 1234567890, "Fine Dining" },
+                    { new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"), "Perambur", "Adyar Anadha Bhavan", 12.5, 1234567890, "Fine Dining" },
+                    { new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"), "Pluto", "SMS Hotel", 12.0, 1234567890, "Fine Dining" },
+                    { new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"), "Peelamedu", "Anadha Bhavan", 17.699999999999999, 1234567890, "Fine Dining" }
                 });
 
             migrationBuilder.InsertData(
@@ -124,39 +163,10 @@ namespace FoodOrderApi.Migrations
                     { new Guid("f613a27f-93c2-4028-9deb-ddc4b8b45e3a"), "Curd Rice Aracini", "265", new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce") }
                 });
 
-            migrationBuilder.InsertData(
-                table: "RestaurantWithMenus",
-                columns: new[] { "RestaurantID", "Menus", "RestaurantLocation", "RestaurantName", "RestaurantOffer", "RestaurantPhoneNumber", "RestaurantType" },
-                values: new object[,]
-                {
-                    { new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Jupiter", "KB Bhavan", 8.0, 1234567890, "Fine Dining" },
-                    { new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"), "Vegetable Club Sandwich,Veg Combo Meal,Orbis Signature Rice\r\n", "Avinashi Road", "Orbis", 20.0, 1234567890, "Multi Cuisine" },
-                    { new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Mars", "Mario Hotel", 14.199999999999999, 1234567890, "Fine Dining" },
-                    { new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"), "Chocolate Sizzler,Choco Brownie Bomb,Chocolate Cookies\r\n", "Race Course Road", "Chocolate Room", 25.5, 1234567890, "Desserts and Beerages" },
-                    { new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"), "Idly(2),Pongal,Roast\r\n", "RS Puram", "Annapoorna", 24.0, 1234567890, "Casual Dining" },
-                    { new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Kalpakam", "Arya Bhavan", 11.4, 1234567890, "Fine Dining" },
-                    { new Guid("baad586a-accf-4433-98f0-2f861e683354"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Ramanathpuram", "Kove", 10.0, 1234567890, "Fine Dining" },
-                    { new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Perambur", "Adyar Anadha Bhavan", 12.5, 1234567890, "Fine Dining" },
-                    { new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Pluto", "SMS Hotel", 12.0, 1234567890, "Fine Dining" },
-                    { new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"), "Thai Broccoli Salad,Curd Rice Aracini,Chettinad Cutlet\r\n", "Peelamedu", "Anadha Bhavan", 17.699999999999999, 1234567890, "Fine Dining" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Restaurants",
-                columns: new[] { "RestaurantID", "RestaurantLocation", "RestaurantName", "RestaurantOffer", "RestaurantPhoneNumber", "RestaurantType" },
-                values: new object[,]
-                {
-                    { new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"), "Jupiter", "KB Bhavan", 8.0, 1234567890, "Fine Dining" },
-                    { new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"), "Avinashi Road", "Orbis", 20.0, 1234567890, "Multi Cuisine" },
-                    { new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"), "Mars", "Mario Hotel", 14.199999999999999, 1234567890, "Fine Dining" },
-                    { new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"), "Race Course Road", "Chocolate Room", 25.5, 1234567890, "Desserts and Beerages" },
-                    { new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"), "RS Puram", "Annapoorna", 24.0, 1234567890, "Casual Dining" },
-                    { new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"), "Kalpakam", "Arya Bhavan", 11.4, 1234567890, "Fine Dining" },
-                    { new Guid("baad586a-accf-4433-98f0-2f861e683354"), "Ramanathpuram", "Kove", 10.0, 1234567890, "Fine Dining" },
-                    { new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"), "Perambur", "Adyar Anadha Bhavan", 12.5, 1234567890, "Fine Dining" },
-                    { new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"), "Pluto", "SMS Hotel", 12.0, 1234567890, "Fine Dining" },
-                    { new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"), "Peelamedu", "Anadha Bhavan", 17.699999999999999, 1234567890, "Fine Dining" }
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_Menus_RestaurantID",
+                table: "Menus",
+                column: "RestaurantID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_ProductID (Numbers)",

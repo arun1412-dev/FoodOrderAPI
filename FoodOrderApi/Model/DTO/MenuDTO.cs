@@ -1,8 +1,4 @@
-﻿using FoodOrderApi.Model.Domain;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-
-namespace FoodOrderApi.Model.DTO
+﻿namespace FoodOrderApi.Model.DTO
 {
     public class MenuDTO
     {

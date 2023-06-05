@@ -24,5 +24,8 @@ namespace FoodOrderApi.Model.Domain
         public Guid RestaurantID { get; set; }
         public string ProductName { get; set; }
         public string ProductPrice { get; set; }
+
+        //[ForeignKey("RestaurantID")]
+        public Restaurant Restaurant { get; set; }
     }
 }

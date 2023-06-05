@@ -1,6 +1,5 @@
 ﻿using FoodOrderApi.Model.Domain;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 
 namespace FoodOrderApi.Repository

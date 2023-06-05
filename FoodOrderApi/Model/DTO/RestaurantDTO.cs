@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace FoodOrderApi.Model.DTO
+﻿namespace FoodOrderApi.Model.DTO
 {
     public class RestaurantDTO
     {

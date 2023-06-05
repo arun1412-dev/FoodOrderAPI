@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using FoodOrderApi.Controllers;
 using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
+using System.Collections;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -12,21 +13,49 @@ namespace FoodOrderApi.DataProvider
     {
         private readonly FoodApiDbContext foodApiDbContext;
         private readonly IMapper mapper;
+        private readonly ILogger<RestaurantController> logger;
 
-        public DbDataProvider(FoodApiDbContext foodApiDbContext, IMapper mapper)
+        public DbDataProvider(FoodApiDbContext foodApiDbContext, IMapper mapper, ILogger<RestaurantController> logger)
         {
             this.foodApiDbContext = foodApiDbContext;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<IEnumerable<Menu>> GetMenus()
         {
-            return await foodApiDbContext.Menus.ToListAsync();
+            return await foodApiDbContext.Menus.Include("Restaurant").ToListAsync();
         }
 
         public async Task<IEnumerable<Order>?> GetOrderByName(string customerName)
         {
             return await foodApiDbContext.Orders.Where(item => item.CustomerName == customerName).Include("Menu").Include("Restaurant").ToListAsync();
+        }
+
+        public async Task<RestaurantsandMenusDTO> SearchMenuAndRestaurant(string searchString)
+        {
+            var restaurants = foodApiDbContext.Restaurants.AsQueryable();
+            var menus = foodApiDbContext.Menus.AsQueryable();
+            restaurants = restaurants.Where(x => x.RestaurantName.ToLower().Contains(searchString.ToLower()));
+            menus = menus.Where(x => x.ProductName.ToLower().Contains(searchString.ToLower())).Include("Restaurant");
+            var restaurantDTOMapper = mapper.Map<List<DisplayRestaurantDTO>>(await restaurants.ToListAsync());
+            var menuDTOMapper = mapper.Map<List<DisplayMenuDTO>>(await menus.ToListAsync());
+
+            RestaurantsandMenusDTO restaurantsandMenusDTOs = new RestaurantsandMenusDTO();
+            restaurantsandMenusDTOs.menu = menuDTOMapper;
+            restaurantsandMenusDTOs.restaurant = restaurantDTOMapper;
+            return restaurantsandMenusDTOs;
+        }
+
+        public async Task<IEnumerable<Restaurant>> FilterRestaurant(string? filterString = null)
+        {
+            var restaurants = foodApiDbContext.Restaurants.AsQueryable();
+            if (filterString != null)
+            {
+                restaurants = restaurants.Where(x => x.RestaurantName.ToLower().Contains(filterString.ToLower()));
+                logger.LogInformation("Data fetched from the restaurant table.");
+            }
+            return await restaurants.ToListAsync();
         }
 
         public async Task<IEnumerable<Restaurant>> GetRestaurant()
@@ -87,6 +116,18 @@ namespace FoodOrderApi.DataProvider
                 return false;
             }
             CustomerOrder.IsDelivered = true;
+            foodApiDbContext.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> DeleteMenu(Guid MenuID)
+        {
+            var Menu = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.ProductID == MenuID);
+            if (Menu == null)
+            {
+                return false;
+            }
+            foodApiDbContext.Menus.Remove(Menu);
             foodApiDbContext.SaveChanges();
             return true;
         }

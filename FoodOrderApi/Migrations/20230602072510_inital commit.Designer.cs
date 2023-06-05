@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodOrderApi.Migrations
 {
     [DbContext(typeof(FoodApiDbContext))]
-    [Migration("20230601134111_intial migrations")]
-    partial class intialmigrations
+    [Migration("20230602072510_inital commit")]
+    partial class initalcommit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,8 @@ namespace FoodOrderApi.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("ProductID");
+
+                    b.HasIndex("RestaurantID");
 
                     b.ToTable("Menus");
 
@@ -537,6 +539,17 @@ namespace FoodOrderApi.Migrations
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Multi Cuisine"
                         });
+                });
+
+            modelBuilder.Entity("FoodOrderApi.Model.Domain.Menu", b =>
+                {
+                    b.HasOne("FoodOrderApi.Model.Domain.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
                 });
 
             modelBuilder.Entity("FoodOrderApi.Model.Domain.Order", b =>
