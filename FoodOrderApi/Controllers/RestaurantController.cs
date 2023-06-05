@@ -5,7 +5,9 @@ using FoodOrderApi.Model.DTO;
 using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using ServiceStack;
+using ServiceStack.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace FoodOrderApi.Controllers
 {
@@ -13,6 +15,7 @@ namespace FoodOrderApi.Controllers
     public class RestaurantController : ControllerBase
     {
         private IDataProvider _dataProvider;
+        private int maxPageSize = 10;
         private readonly IMapper mapper;
         private readonly ILogger logger;
 
@@ -25,12 +28,27 @@ namespace FoodOrderApi.Controllers
 
         //[HttpGet("Restaurants.{format}"), FormatFilter]
         [HttpGet]
-        public async Task<ActionResult> GetRestaurant()
+        public async Task<ActionResult> GetRestaurant([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 3)
         {
-            var restaurants = await _dataProvider.GetRestaurant();
-            var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(restaurants.ToList());
-            logger.LogInformation("Data fetched from the restaurant table.");
-            return Ok(restaurantMapper);
+            if(pageSize > maxPageSize) 
+            {
+                pageSize = maxPageSize;
+            }
+            // Get the restaurants
+            var (allRestaurants, metadata) = await _dataProvider.GetRestaurantPaged(pageNumber, pageSize);
+            var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(allRestaurants.ToList());
+            if(allRestaurants.Count()!=0)
+            {
+                logger.LogInformation("Data fetched from the restaurant table.");
+                var serializerOutput = System.Text.Json.JsonSerializer.Serialize(metadata);
+                Response.Headers.Add("X-Pagination", serializerOutput);
+                return Ok(restaurantMapper);
+            }
+            else
+            {
+                Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(metadata));
+                return BadRequest("Restaurants not found!");
+            }
         }
 
         [HttpGet("RestaurantwithMenus")]

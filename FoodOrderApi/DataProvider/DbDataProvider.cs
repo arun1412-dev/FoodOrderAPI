@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodOrderApi.Model;
 using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using FoodOrderApi.Repository;
@@ -29,9 +30,18 @@ namespace FoodOrderApi.DataProvider
             return await foodApiDbContext.Orders.Where(item => item.CustomerName == customerName).Include("Menu").Include("Restaurant").ToListAsync();
         }
 
-        public async Task<IEnumerable<Restaurant>> GetRestaurant()
+        public async Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int pageSize)
         {
-            return await foodApiDbContext.Restaurants.ToListAsync();
+            var productsCount = await foodApiDbContext.Restaurants.CountAsync();
+            var paginationMetadata = new PaginationMetadata(productsCount, pageSize, pageNumber);
+
+            var paginatedProducts = await foodApiDbContext.Restaurants
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            //return (paginatedProducts, paginationMetadata);
+            return (paginatedProducts, paginationMetadata);
         }
 
         public async Task<IList<string>?> GetRestaurantWithMenu(string restaurantName)
@@ -89,6 +99,11 @@ namespace FoodOrderApi.DataProvider
             CustomerOrder.IsDelivered = true;
             foodApiDbContext.SaveChanges();
             return true;
+        }
+
+        public async Task<IEnumerable<Restaurant>> GetRestaurant()
+        {
+            return await foodApiDbContext.Restaurants.ToListAsync();
         }
     }
 }
