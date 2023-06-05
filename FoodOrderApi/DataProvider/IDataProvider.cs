@@ -16,5 +16,7 @@ namespace FoodOrderApi.DataProvider
         Task<List<Order>?> PlaceOrder(List<GetOrderDTO> newCustomerOrder);
 
         Task<bool> OrderDelivered(Guid CustomerOrderId);
+
+        Task<bool> Discount(string restaturantName, double discount);
     }
 }
