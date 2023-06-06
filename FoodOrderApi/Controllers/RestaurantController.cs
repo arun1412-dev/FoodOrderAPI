@@ -122,5 +122,16 @@ namespace FoodOrderApi.Controllers
                 return NotFound("Can't able to found the Order.");
             }
         }
+        [HttpGet("Discount/{restaturant}/{discount}")]
+        public async Task<ActionResult> Discount( [FromRoute] string restaturant, [FromRoute] double discount){
+            if (_dataProvider.Discount(restaturant, discount).Result)
+            {
+                return Ok("success");
+            }
+            else
+            {
+                return NotFound("Restaturant Not Found");
+            }
+        }
     }
 }

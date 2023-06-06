@@ -101,9 +101,26 @@ namespace FoodOrderApi.DataProvider
             return true;
         }
 
+
         public async Task<IEnumerable<Restaurant>> GetRestaurant()
         {
             return await foodApiDbContext.Restaurants.ToListAsync();
+        }
+
+        public async Task<bool> Discount(string restaturantName, double discount)
+        {
+            var found = foodApiDbContext.Restaurants.ToList();
+            var Restaturant = found.Where(s => s.RestaurantName == restaturantName);
+            if (Restaturant.Count() != 0) {
+                var restaurant = await foodApiDbContext.Restaurants.FirstOrDefaultAsync(x => x.RestaurantName == restaturantName);
+                restaurant.RestaurantOffer = discount;
+                foodApiDbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
