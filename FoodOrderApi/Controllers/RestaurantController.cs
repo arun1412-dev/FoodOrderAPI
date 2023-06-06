@@ -3,7 +3,10 @@ using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
 using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
+using ServiceStack;
+using ServiceStack.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json;
 
 namespace FoodOrderApi.Controllers
 {
@@ -11,6 +14,7 @@ namespace FoodOrderApi.Controllers
     public class RestaurantController : ControllerBase
     {
         private IDataProvider _dataProvider;
+        private int maxPageSize = 10;
         private readonly IMapper mapper;
         private readonly ILogger logger;
 
@@ -22,10 +26,32 @@ namespace FoodOrderApi.Controllers
         }
 
         //[HttpGet("Restaurants.{format}"), FormatFilter]
-
         [HttpGet]
-        public async Task<ActionResult> GetRestaurantByName([FromQuery] string? filterString)
+        public async Task<ActionResult> GetRestaurant([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 3)
         {
+            if(pageSize > maxPageSize) 
+            {
+                pageSize = maxPageSize;
+            }
+            // Get the restaurants
+            var (allRestaurants, metadata) = await _dataProvider.GetRestaurantPaged(pageNumber, pageSize);
+            var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(allRestaurants.ToList());
+            if(allRestaurants.Count()!=0)
+            {
+                logger.LogInformation("Data fetched from the restaurant table.");
+                var serializerOutput = System.Text.Json.JsonSerializer.Serialize(metadata);
+                Response.Headers.Add("X-Pagination", serializerOutput);
+                return Ok(restaurantMapper);
+            }
+            else
+            {
+                Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(metadata));
+                return BadRequest("Restaurants not found!");
+            }
+        }
+        [HttpGet("RestaurantByName")]
+        public async Task<ActionResult> GetRestaurantByName([FromQuery] string? filterString)
+        { 
             var restaurants = (await _dataProvider.FilterRestaurant(filterString));
             var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(restaurants.ToList());
             return Ok(restaurantMapper);
@@ -86,6 +112,7 @@ namespace FoodOrderApi.Controllers
             if (OrderDetails == null)
             {
                 logger.LogError("Can't able to add data as they are invalid.");
+                return BadRequest();
             }
             logger.LogInformation("Data added to the Orders Table.");
             return Ok(mapper.Map<List<OrderDTO>>(OrderDetails));
@@ -133,6 +160,17 @@ namespace FoodOrderApi.Controllers
             {
                 logger.LogInformation("Order not found.");
                 return BadRequest("Can't able to found the Order.");
+            }
+        }
+        [HttpGet("Discount/{restaturant}/{discount}")]
+        public async Task<ActionResult> Discount( [FromRoute] string restaturant, [FromRoute] double discount){
+            if (_dataProvider.Discount(restaturant, discount).Result)
+            {
+                return Ok("success");
+            }
+            else
+            {
+                return NotFound("Restaturant Not Found");
             }
         }
     }

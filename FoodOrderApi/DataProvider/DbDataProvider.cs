@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodOrderApi.Model;
 using FoodOrderApi.Controllers;
 using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
@@ -58,9 +59,18 @@ namespace FoodOrderApi.DataProvider
             return await restaurants.ToListAsync();
         }
 
-        public async Task<IEnumerable<Restaurant>> GetRestaurant()
+        public async Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int pageSize)
         {
-            return await foodApiDbContext.Restaurants.ToListAsync();
+            var productsCount = await foodApiDbContext.Restaurants.CountAsync();
+            var paginationMetadata = new PaginationMetadata(productsCount, pageSize, pageNumber);
+
+            var paginatedProducts = await foodApiDbContext.Restaurants
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            //return (paginatedProducts, paginationMetadata);
+            return (paginatedProducts, paginationMetadata);
         }
 
         public async Task<IList<string>?> GetRestaurantWithMenu(string restaurantName)
@@ -118,6 +128,28 @@ namespace FoodOrderApi.DataProvider
             CustomerOrder.IsDelivered = true;
             foodApiDbContext.SaveChanges();
             return true;
+        }
+
+        public async Task<IEnumerable<Restaurant>> GetRestaurant()
+        {
+            return await foodApiDbContext.Restaurants.ToListAsync();
+        }
+
+        public async Task<bool> Discount(string restaturantName, double discount)
+        {
+            var found = foodApiDbContext.Restaurants.ToList();
+            var Restaturant = found.Where(s => s.RestaurantName == restaturantName);
+            if (Restaturant.Count() != 0)
+            {
+                var restaurant = await foodApiDbContext.Restaurants.FirstOrDefaultAsync(x => x.RestaurantName == restaturantName);
+                restaurant.RestaurantOffer = discount;
+                foodApiDbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public async Task<bool> DeleteMenu(Guid MenuID)
