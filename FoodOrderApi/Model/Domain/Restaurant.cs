@@ -12,7 +12,5 @@ namespace FoodOrderApi.Model.Domain
         public int RestaurantPhoneNumber { get; set; }
         public string RestaurantLocation { get; set; }
         public double RestaurantOffer { get; set; }
-        //Navigation
-        //public Menu Menu { get; set; }
     }
 }
