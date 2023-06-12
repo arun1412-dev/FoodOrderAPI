@@ -162,7 +162,7 @@ namespace FoodOrderApi.Controllers
                 return BadRequest("Can't able to found the Order.");
             }
         }
-        [HttpGet("Discount/{restaturant}/{discount}")]
+        [HttpPut("Discount/{restaturant}/{discount}")]
         public async Task<ActionResult> Discount( [FromRoute] string restaturant, [FromRoute] double discount){
             if (_dataProvider.Discount(restaturant, discount).Result)
             {
