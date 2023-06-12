@@ -167,40 +167,23 @@ namespace FoodOrderApi.DataProvider
 
         public async Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument)
         {
-            //var restaurantMenus = await foodApiDbContext.Menus.FindAsync(RestaurantID);
             var restaurantMenus = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
-         
+
             if (restaurantMenus != null)
             {
-                var menuToBePatched = mapper.Map<Menu>(jsonPatchDocument);
-                
-                foodApiDbContext.SaveChangesAsync();
-                if (ModelState.IsValid)
+                var newMenu = new Menu();
+                jsonPatchDocument.ApplyTo(newMenu, ModelState);
+                newMenu.ProductID = Guid.NewGuid();
+                newMenu.RestaurantID = RestaurantID;
+                await foodApiDbContext.Menus.AddAsync(newMenu);
+                await foodApiDbContext.SaveChangesAsync();
+                if (!ModelState.IsValid)
                 {
                     return null;
                 }
-                return restaurantMenus;
+                return newMenu;
             }
             return null;
         }
     }
 }
-
-//public async Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument)
-//{
-//    //var restaurantMenus = await foodApiDbContext.Menus.FindAsync(RestaurantID);
-//    var restaurantMenus = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
-
-//    if (restaurantMenus != null)
-//    {
-//        var menuToBePatched = new Menu();
-//        jsonPatchDocument.ApplyTo(menuToBePatched, ModelState);
-//        foodApiDbContext.SaveChangesAsync();
-//        if (ModelState.IsValid)
-//        {
-//            return null;
-//        }
-//        return restaurantMenus;
-//    }
-//    return null;
-//}

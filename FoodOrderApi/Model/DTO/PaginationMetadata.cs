@@ -12,7 +12,7 @@
             TotalItem = totalItem;
             PageSize = pageSize;
             CurrentPage = currentPage;
-            TotalPage = (int)Math.Ceiling(totalItem/(double)pageSize);
+            TotalPage = (int)Math.Ceiling(totalItem / (double)pageSize);
         }
     }
 }
