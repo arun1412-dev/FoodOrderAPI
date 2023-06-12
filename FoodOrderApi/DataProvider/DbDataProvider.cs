@@ -7,6 +7,7 @@ using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -163,5 +164,43 @@ namespace FoodOrderApi.DataProvider
             foodApiDbContext.SaveChanges();
             return true;
         }
+
+        public async Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument)
+        {
+            //var restaurantMenus = await foodApiDbContext.Menus.FindAsync(RestaurantID);
+            var restaurantMenus = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
+         
+            if (restaurantMenus != null)
+            {
+                var menuToBePatched = mapper.Map<Menu>(jsonPatchDocument);
+                
+                foodApiDbContext.SaveChangesAsync();
+                if (ModelState.IsValid)
+                {
+                    return null;
+                }
+                return restaurantMenus;
+            }
+            return null;
+        }
     }
 }
+
+//public async Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument)
+//{
+//    //var restaurantMenus = await foodApiDbContext.Menus.FindAsync(RestaurantID);
+//    var restaurantMenus = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
+
+//    if (restaurantMenus != null)
+//    {
+//        var menuToBePatched = new Menu();
+//        jsonPatchDocument.ApplyTo(menuToBePatched, ModelState);
+//        foodApiDbContext.SaveChangesAsync();
+//        if (ModelState.IsValid)
+//        {
+//            return null;
+//        }
+//        return restaurantMenus;
+//    }
+//    return null;
+//}

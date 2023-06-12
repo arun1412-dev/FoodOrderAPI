@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
+using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ServiceStack;
 using ServiceStack.Text;
@@ -173,5 +175,31 @@ namespace FoodOrderApi.Controllers
                 return NotFound("Restaturant Not Found");
             }
         }
+
+        [HttpPatch("PatchMenu/{RestaurantID}")]
+        public async Task<ActionResult> PatchMenuItems([Required] Guid RestaurantID, [FromBody] JsonPatchDocument<Menu> jsonPatchDocument)
+        {
+            await _dataProvider.PatchMenuItems(RestaurantID, jsonPatchDocument);
+            return Ok();
+        }
     }
 }
+////if (jsonPatchDocument != null)
+////{
+//var restaurantWithMenu = await _dataProvider.GetSpecificRestaurantMenus(restaurantName);
+
+
+
+//var menuToBePatched = new MenuDTO();
+//jsonPatchDocument.ApplyTo(menuToBePatched, ModelState);
+
+//if (ModelState.IsValid)
+//{
+//    return StatusCode(400);
+//}
+//return NoContent();
+////}
+////else
+////{
+////return StatusCode(400);
+////}
