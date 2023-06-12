@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
-using FoodOrderApi.Model;
 using FoodOrderApi.Controllers;
 using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -68,8 +66,6 @@ namespace FoodOrderApi.DataProvider
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
-
-            //return (paginatedProducts, paginationMetadata);
             return (paginatedProducts, paginationMetadata);
         }
 

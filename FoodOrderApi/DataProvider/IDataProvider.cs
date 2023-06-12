@@ -6,8 +6,9 @@ namespace FoodOrderApi.DataProvider
     public interface IDataProvider
     {
         Task<IEnumerable<Menu>> GetMenus();
+
         Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int PageSize);
-        //Task<IEnumerable<Restaurant>> GetRestaurantPaged(int pageNumber, int PageSize);
+
         Task<IEnumerable<Restaurant>> GetRestaurant();
 
         Task<IList<string>?> GetRestaurantWithMenu(string restaurantName);
