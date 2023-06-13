@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
-using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
-using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 

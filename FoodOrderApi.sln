@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodOrderApi", "FoodOrderApi\FoodOrderApi.csproj", "{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodOrderApi", "FoodOrderApi\FoodOrderApi.csproj", "{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBF81D55-2800-4743-86EC-CD7DE667FAA0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CB09A498-7035-4D11-A583-DBDFA2C2BEF5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,6 +22,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49} = {EBF81D55-2800-4743-86EC-CD7DE667FAA0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36858B52-8898-411D-A617-B155B6BFA8A0}

@@ -4,7 +4,6 @@ using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrderApi.Controllers

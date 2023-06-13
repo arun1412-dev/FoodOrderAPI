@@ -3,10 +3,9 @@ using FoodOrderApi.Controllers;
 using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using FoodOrderApi.Repository;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections;
-using Microsoft.AspNetCore.JsonPatch;
 
 namespace FoodOrderApi.DataProvider
 {

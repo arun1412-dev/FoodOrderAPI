@@ -3,7 +3,6 @@ using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
 using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrderApi.Controllers
