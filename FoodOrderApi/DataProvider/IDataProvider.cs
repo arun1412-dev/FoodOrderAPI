@@ -1,13 +1,15 @@
 ﻿using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace FoodOrderApi.DataProvider
 {
     public interface IDataProvider
     {
         Task<IEnumerable<Menu>> GetMenus();
+
         Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int PageSize);
-        //Task<IEnumerable<Restaurant>> GetRestaurantPaged(int pageNumber, int PageSize);
+
         Task<IEnumerable<Restaurant>> GetRestaurant();
 
         Task<IList<string>?> GetRestaurantWithMenu(string restaurantName);
@@ -25,5 +27,7 @@ namespace FoodOrderApi.DataProvider
         Task<bool> DeleteMenu(Guid MenuID);
 
         Task<bool> Discount(string restaturantName, double discount);
+
+        Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument);
     }
 }

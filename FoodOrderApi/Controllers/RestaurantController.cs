@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
+using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using ServiceStack;
-using ServiceStack.Text;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
 
 namespace FoodOrderApi.Controllers
 {
@@ -27,16 +26,16 @@ namespace FoodOrderApi.Controllers
 
         //[HttpGet("Restaurants.{format}"), FormatFilter]
         [HttpGet]
-        public async Task<ActionResult> GetRestaurant([FromQuery]int pageNumber = 1, [FromQuery] int pageSize = 3)
+        public async Task<ActionResult> GetRestaurant([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 3)
         {
-            if(pageSize > maxPageSize) 
+            if (pageSize > maxPageSize)
             {
                 pageSize = maxPageSize;
             }
             // Get the restaurants
             var (allRestaurants, metadata) = await _dataProvider.GetRestaurantPaged(pageNumber, pageSize);
             var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(allRestaurants.ToList());
-            if(allRestaurants.Count()!=0)
+            if (allRestaurants.Count() != 0)
             {
                 logger.LogInformation("Data fetched from the restaurant table.");
                 var serializerOutput = System.Text.Json.JsonSerializer.Serialize(metadata);
@@ -49,9 +48,10 @@ namespace FoodOrderApi.Controllers
                 return BadRequest("Restaurants not found!");
             }
         }
+
         [HttpGet("RestaurantByName")]
         public async Task<ActionResult> GetRestaurantByName([FromQuery] string? filterString)
-        { 
+        {
             var restaurants = (await _dataProvider.FilterRestaurant(filterString));
             var restaurantMapper = mapper.Map<List<DisplayRestaurantDTO>>(restaurants.ToList());
             return Ok(restaurantMapper);
@@ -172,6 +172,18 @@ namespace FoodOrderApi.Controllers
             {
                 return NotFound("Restaturant Not Found");
             }
+        }
+
+        [HttpPatch("PatchMenu/{RestaurantID}")]
+        public async Task<ActionResult> PatchMenuItems([Required] Guid RestaurantID, [FromBody] JsonPatchDocument<Menu> jsonPatchDocument)
+        {
+            var status = await _dataProvider.PatchMenuItems(RestaurantID, jsonPatchDocument);
+            if (status != null)
+            {
+                var statusDTO = mapper.Map<MenuDTO>(status);
+                return Ok(statusDTO);
+            }
+            return BadRequest();
         }
     }
 }

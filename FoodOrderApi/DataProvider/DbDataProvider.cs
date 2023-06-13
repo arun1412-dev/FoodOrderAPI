@@ -7,6 +7,7 @@ using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -162,6 +163,27 @@ namespace FoodOrderApi.DataProvider
             foodApiDbContext.Menus.Remove(Menu);
             foodApiDbContext.SaveChanges();
             return true;
+        }
+
+        public async Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument)
+        {
+            var restaurantMenus = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
+
+            if (restaurantMenus != null)
+            {
+                var newMenu = new Menu();
+                jsonPatchDocument.ApplyTo(newMenu, ModelState);
+                newMenu.ProductID = Guid.NewGuid();
+                newMenu.RestaurantID = RestaurantID;
+                await foodApiDbContext.Menus.AddAsync(newMenu);
+                await foodApiDbContext.SaveChangesAsync();
+                if (!ModelState.IsValid)
+                {
+                    return null;
+                }
+                return newMenu;
+            }
+            return null;
         }
     }
 }
