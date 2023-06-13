@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FoodOrderApi.Migrations
 {
     [DbContext(typeof(FoodApiDbContext))]
-    [Migration("20230602072510_inital commit")]
-    partial class initalcommit
+    [Migration("20230606131019_initial Migrations")]
+    partial class initialMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,18 +24,22 @@ namespace FoodOrderApi.Migrations
                 {
                     b.Property<Guid>("ProductID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Item ID");
 
                     b.Property<string>("ProductName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Item Name");
 
-                    b.Property<string>("ProductPrice")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<double>("ProductPrice")
+                        .HasPrecision(2, 3)
+                        .HasColumnType("REAL")
+                        .HasColumnName("Item Price (₹)");
 
                     b.Property<Guid>("RestaurantID")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Restaurant ID");
 
                     b.HasKey("ProductID");
 
@@ -48,210 +52,210 @@ namespace FoodOrderApi.Migrations
                         {
                             ProductID = new Guid("e0194510-6ad1-4ac2-bf31-e572caa09ba1"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "205",
+                            ProductPrice = 205.0,
                             RestaurantID = new Guid("baad586a-accf-4433-98f0-2f861e683354")
                         },
                         new
                         {
                             ProductID = new Guid("983fc832-5371-4bdc-af27-bd14f5998f44"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "200",
+                            ProductPrice = 200.0,
                             RestaurantID = new Guid("baad586a-accf-4433-98f0-2f861e683354")
                         },
                         new
                         {
                             ProductID = new Guid("ae527a12-be03-4ac1-8206-7345a1a90bf6"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("baad586a-accf-4433-98f0-2f861e683354")
                         },
                         new
                         {
                             ProductID = new Guid("26986da6-4610-472e-b14a-30a713bdd30e"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "205",
+                            ProductPrice = 205.0,
                             RestaurantID = new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd")
                         },
                         new
                         {
                             ProductID = new Guid("f2612c12-b189-4d23-9532-e7c07a1eebe3"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "275",
+                            ProductPrice = 275.0,
                             RestaurantID = new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd")
                         },
                         new
                         {
                             ProductID = new Guid("d636db98-a948-45ab-956b-9078a9252a42"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd")
                         },
                         new
                         {
                             ProductID = new Guid("b6b56f12-0ac4-401c-82c6-9a5103870ed8"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "200",
+                            ProductPrice = 200.0,
                             RestaurantID = new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce")
                         },
                         new
                         {
                             ProductID = new Guid("f613a27f-93c2-4028-9deb-ddc4b8b45e3a"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "265",
+                            ProductPrice = 265.0,
                             RestaurantID = new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce")
                         },
                         new
                         {
                             ProductID = new Guid("289f9767-e25f-407d-ae50-72c3debe8ced"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce")
                         },
                         new
                         {
                             ProductID = new Guid("0c976706-286a-4f66-a65b-12461d8847fb"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "200",
+                            ProductPrice = 200.0,
                             RestaurantID = new Guid("a082a822-c7f0-4ea0-837d-957a5b154908")
                         },
                         new
                         {
                             ProductID = new Guid("999c9f43-5153-4e08-b471-1015bf08498e"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "205",
+                            ProductPrice = 205.0,
                             RestaurantID = new Guid("a082a822-c7f0-4ea0-837d-957a5b154908")
                         },
                         new
                         {
                             ProductID = new Guid("768b93dd-e9d4-4a64-941c-cf4a902b75a6"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("a082a822-c7f0-4ea0-837d-957a5b154908")
                         },
                         new
                         {
                             ProductID = new Guid("2318c8a7-f867-415d-8427-df4bbe527796"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "200",
+                            ProductPrice = 200.0,
                             RestaurantID = new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026")
                         },
                         new
                         {
                             ProductID = new Guid("0bd3debf-0ec8-4cb4-9497-e76da79eb9c8"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "205",
+                            ProductPrice = 205.0,
                             RestaurantID = new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026")
                         },
                         new
                         {
                             ProductID = new Guid("f1b97db8-9b54-4616-8d49-b36e4cd08f5f"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026")
                         },
                         new
                         {
                             ProductID = new Guid("ea6460df-d676-426c-8699-ae19230d743e"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "200",
+                            ProductPrice = 200.0,
                             RestaurantID = new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55")
                         },
                         new
                         {
                             ProductID = new Guid("6c9ba650-6204-4ba0-9602-4413932e36b1"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "205",
+                            ProductPrice = 205.0,
                             RestaurantID = new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55")
                         },
                         new
                         {
                             ProductID = new Guid("019ec633-f286-4955-b473-d510daf80960"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55")
                         },
                         new
                         {
                             ProductID = new Guid("cfa81f1b-9db5-43a4-962d-506e68615495"),
                             ProductName = "Thai Broccoli Salad",
-                            ProductPrice = "200",
+                            ProductPrice = 200.0,
                             RestaurantID = new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4")
                         },
                         new
                         {
                             ProductID = new Guid("8de20733-568b-430d-b642-a3a5254b6418"),
                             ProductName = "Curd Rice Aracini",
-                            ProductPrice = "205",
+                            ProductPrice = 205.0,
                             RestaurantID = new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4")
                         },
                         new
                         {
                             ProductID = new Guid("6fa050ad-d0c1-41f0-a131-610c3e78e03d"),
                             ProductName = "Chettinad Cutlet",
-                            ProductPrice = "255",
+                            ProductPrice = 255.0,
                             RestaurantID = new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4")
                         },
                         new
                         {
                             ProductID = new Guid("be5a857b-1336-4d13-a1d8-b0c9683689ca"),
                             ProductName = "Idly(2)",
-                            ProductPrice = "33",
+                            ProductPrice = 33.0,
                             RestaurantID = new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac")
                         },
                         new
                         {
                             ProductID = new Guid("780717ad-8473-4c23-b9b0-a256fd80f13f"),
                             ProductName = "Pongal",
-                            ProductPrice = "48",
+                            ProductPrice = 48.0,
                             RestaurantID = new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac")
                         },
                         new
                         {
                             ProductID = new Guid("e1764da4-941d-463a-8531-43b701306780"),
                             ProductName = "Roast",
-                            ProductPrice = "75",
+                            ProductPrice = 75.0,
                             RestaurantID = new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac")
                         },
                         new
                         {
                             ProductID = new Guid("1ff36c1a-3e10-4651-88e4-7fc4736bf4d8"),
                             ProductName = "Chocolate Sizzler",
-                            ProductPrice = "299",
+                            ProductPrice = 299.0,
                             RestaurantID = new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b")
                         },
                         new
                         {
                             ProductID = new Guid("316dc710-146c-430b-9b0f-e9aa51b1e8e9"),
                             ProductName = "Choco Brownie Bomb",
-                            ProductPrice = "249",
+                            ProductPrice = 249.0,
                             RestaurantID = new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b")
                         },
                         new
                         {
                             ProductID = new Guid("3a011230-db41-4407-9218-347f51391818"),
                             ProductName = "Chocolate Cookies",
-                            ProductPrice = "199",
+                            ProductPrice = 199.0,
                             RestaurantID = new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b")
                         },
                         new
                         {
                             ProductID = new Guid("c8e03d8c-3438-4583-b12e-1ba54c3670d6"),
                             ProductName = "Vegetable Club Sandwich",
-                            ProductPrice = "150",
+                            ProductPrice = 150.0,
                             RestaurantID = new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5")
                         },
                         new
                         {
                             ProductID = new Guid("a91be131-8704-45ae-9ba7-60e70c58abb4"),
                             ProductName = "Veg Combo Meal",
-                            ProductPrice = "439",
+                            ProductPrice = 439.0,
                             RestaurantID = new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5")
                         },
                         new
                         {
                             ProductID = new Guid("5849b06f-9731-4e31-a908-6e7e9dafdd5a"),
                             ProductName = "Orbis Signature Rice",
-                            ProductPrice = "250",
+                            ProductPrice = 250.0,
                             RestaurantID = new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5")
                         });
                 });
@@ -264,14 +268,17 @@ namespace FoodOrderApi.Migrations
 
                     b.Property<string>("CustomerName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasMaxLength(50)
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Customer Name");
 
-                    b.Property<bool>("IsDelivered")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("IsDelivered")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Status");
 
                     b.Property<Guid>("ProductID")
-                        .HasColumnType("TEXT")
-                        .HasColumnName("ProductID (Numbers)");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid>("RestaurantID")
                         .HasColumnType("TEXT");
@@ -293,21 +300,27 @@ namespace FoodOrderApi.Migrations
 
                     b.Property<string>("RestaurantLocation")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Address");
 
                     b.Property<string>("RestaurantName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Name");
 
                     b.Property<double>("RestaurantOffer")
-                        .HasColumnType("REAL");
+                        .HasPrecision(2)
+                        .HasColumnType("REAL")
+                        .HasColumnName("Discount");
 
                     b.Property<int>("RestaurantPhoneNumber")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Phone Number");
 
                     b.Property<string>("RestaurantType")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Type");
 
                     b.HasKey("RestaurantID");
 
@@ -418,21 +431,26 @@ namespace FoodOrderApi.Migrations
 
                     b.Property<string>("RestaurantLocation")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Address");
 
                     b.Property<string>("RestaurantName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Name");
 
                     b.Property<double>("RestaurantOffer")
-                        .HasColumnType("REAL");
+                        .HasColumnType("REAL")
+                        .HasColumnName("Discount");
 
                     b.Property<int>("RestaurantPhoneNumber")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Phone Number");
 
                     b.Property<string>("RestaurantType")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("TEXT")
+                        .HasColumnName("Type");
 
                     b.HasKey("RestaurantID");
 

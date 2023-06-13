@@ -79,7 +79,6 @@ namespace FoodOrderApi.Controllers
                 var searched = (await _dataProvider.SearchMenuAndRestaurant(searchString.Trim()));
                 if (searched.menu.Count() > 0 && searched.restaurant.Count() > 0)
                 {
-                    // var menumapper = mapper.Map<List<DisplayMenuDTO>>(searched);
                     return Ok(searched);
                 }
                 else if (searched.menu.Count() > 0)
@@ -162,8 +161,10 @@ namespace FoodOrderApi.Controllers
                 return BadRequest("Can't able to found the Order.");
             }
         }
+
         [HttpPut("Discount/{restaturant}/{discount}")]
-        public async Task<ActionResult> Discount( [FromRoute] string restaturant, [FromRoute] double discount){
+        public async Task<ActionResult> Discount([FromRoute] string restaturant, [FromRoute][Range(0, 100)] double discount)
+        {
             if (_dataProvider.Discount(restaturant, discount).Result)
             {
                 return Ok("success");
