@@ -57,20 +57,6 @@ namespace FoodOrderApi.Controllers
             return Ok(restaurantMapper);
         }
 
-        [HttpGet("RestaurantwithMenus")]
-        public async Task<ActionResult> GetRestaurantWithMenu([Required] string RestrauntName)
-        {
-            var restaurantsWithMenu = await _dataProvider.GetRestaurantWithMenu(RestrauntName);
-            if (restaurantsWithMenu == null)
-            {
-                logger.LogError("Restaurant not found in the database.");
-                return NotFound("Restaurant not found.");
-            }
-            var restaurantMapper = mapper.Map<List<string>>(restaurantsWithMenu.ToList());
-            logger.LogInformation("Data fetched from the Restaurant with Menu table.");
-            return Ok(restaurantMapper);
-        }
-
         [HttpGet("Search")]
         public async Task<ActionResult> SearchRestaurantandMenu([FromQuery][Required] string searchString)
         {
@@ -102,89 +88,18 @@ namespace FoodOrderApi.Controllers
             return Ok(menus);
         }
 
-        [HttpPost("PlaceOrder")]
-        [ValidateModel]
-        public async Task<ActionResult> PlaceOrder([FromBody] List<GetOrderDTO> newCustomerOrder)
+        [HttpGet("RestaurantwithMenus")]
+        public async Task<ActionResult> GetRestaurantWithMenu([Required] string RestrauntName)
         {
-            var newor = newCustomerOrder;
-            var OrderDetails = await _dataProvider.PlaceOrder(newCustomerOrder);
-            if (OrderDetails == null)
+            var restaurantsWithMenu = await _dataProvider.GetRestaurantWithMenu(RestrauntName);
+            if (restaurantsWithMenu == null)
             {
-                logger.LogError("Can't able to add data as they are invalid.");
-                return BadRequest();
+                logger.LogError("Restaurant not found in the database.");
+                return NotFound("Restaurant not found.");
             }
-            logger.LogInformation("Data added to the Orders Table.");
-            return Ok(mapper.Map<List<OrderDTO>>(OrderDetails));
-        }
-
-        [HttpGet("Orders/{customerName}")]
-        public async Task<ActionResult> GetOrders([Required] string customerName)
-        {
-            var getOrders = await _dataProvider.GetOrderByName(customerName);
-            if (getOrders == null)
-            {
-                logger.LogInformation("Orders not found for the particular person.");
-                return NotFound("Orders not found.");
-            }
-            logger.LogInformation("Data fetched from the Orders Table.");
-            return Ok(mapper.Map<IEnumerable<OrderDTO>>(getOrders));
-        }
-
-        [HttpDelete("OrderDelivered/{orderId}")]
-        public async Task<ActionResult> OrderDelivered([Required] Guid orderId)
-        {
-            var IsDelivered = _dataProvider.OrderDelivered(orderId);
-            if (IsDelivered.Result)
-            {
-                logger.LogInformation("Order delivered and changed in the database.");
-                return Ok("Success");
-            }
-            else
-            {
-                logger.LogInformation("Order not found.");
-                return NotFound("Can't able to found the Order.");
-            }
-        }
-
-        [HttpDelete("DeleteMenu/{MenuID:Guid}")]
-        public async Task<ActionResult> DeleteMenu([Required] Guid MenuID)
-        {
-            var IsDeleted = _dataProvider.DeleteMenu(MenuID);
-            if (IsDeleted.Result)
-            {
-                logger.LogInformation("Menu removed from the hotel");
-                return Ok("Success");
-            }
-            else
-            {
-                logger.LogInformation("Order not found.");
-                return BadRequest("Can't able to found the Order.");
-            }
-        }
-
-        [HttpPut("Discount/{restaturant}/{discount}")]
-        public async Task<ActionResult> Discount([FromRoute] string restaturant, [FromRoute][Range(0, 100)] double discount)
-        {
-            if (_dataProvider.Discount(restaturant, discount).Result)
-            {
-                return Ok("success");
-            }
-            else
-            {
-                return NotFound("Restaturant Not Found");
-            }
-        }
-
-        [HttpPatch("PatchMenu/{RestaurantID}")]
-        public async Task<ActionResult> PatchMenuItems([Required] Guid RestaurantID, [FromBody] JsonPatchDocument<Menu> jsonPatchDocument)
-        {
-            var status = await _dataProvider.PatchMenuItems(RestaurantID, jsonPatchDocument);
-            if (status != null)
-            {
-                var statusDTO = mapper.Map<MenuDTO>(status);
-                return Ok(statusDTO);
-            }
-            return BadRequest();
+            var restaurantMapper = mapper.Map<List<string>>(restaurantsWithMenu.ToList());
+            logger.LogInformation("Data fetched from the Restaurant with Menu table.");
+            return Ok(restaurantMapper);
         }
     }
 }

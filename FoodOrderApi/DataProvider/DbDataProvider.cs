@@ -39,7 +39,7 @@ namespace FoodOrderApi.DataProvider
             var menus = foodApiDbContext.Menus.AsQueryable();
             restaurants = restaurants.Where(x => x.RestaurantName.ToLower().Contains(searchString.ToLower()));
             menus = menus.Where(x => x.ProductName.ToLower().Contains(searchString.ToLower())).Include("Restaurant");
-            var restaurantDTOMapper = mapper.Map<List<DisplayRestaurantDTO>>(await restaurants.ToListAsync());
+            var restaurantDTOMapper = mapper.Map<List<RestaurantDTO>>(await restaurants.ToListAsync());
             var menuDTOMapper = mapper.Map<List<DisplayMenuDTO>>(await menus.ToListAsync());
 
             RestaurantsandMenusDTO restaurantsandMenusDTOs = new RestaurantsandMenusDTO();
