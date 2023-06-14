@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace FoodOrderApi.Repository
 {
-    public class FoodApiDbContext : DbContext
+    public class FoodApiDbContext : DbContext, IDbProvider
     {
         public FoodApiDbContext(DbContextOptions options) : base(options)
         {
@@ -15,6 +15,8 @@ namespace FoodOrderApi.Repository
         public DbSet<Menu> Menus { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<RestaurantWithMenu> RestaurantWithMenus { get; set; }
+
+        public Task<int> SaveChangesAsync() => base.SaveChangesAsync();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

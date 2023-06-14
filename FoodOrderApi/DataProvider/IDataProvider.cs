@@ -8,7 +8,7 @@ namespace FoodOrderApi.DataProvider
     {
         Task<IEnumerable<Menu>> GetMenus();
 
-        Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int PageSize);
+        Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int pageSize);
 
         Task<IEnumerable<Restaurant>> GetRestaurant();
 
@@ -22,7 +22,7 @@ namespace FoodOrderApi.DataProvider
 
         Task<IEnumerable<Restaurant>> FilterRestaurant(string? filterString = null);
 
-        Task<RestaurantsandMenusDTO> SearchMenuAndRestaurant(string searchString);
+        Task<RestaurantsandMenus> SearchMenuAndRestaurant(string searchString);
 
         Task<bool> DeleteMenu(Guid MenuID);
 
