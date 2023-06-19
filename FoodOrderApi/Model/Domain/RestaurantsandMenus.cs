@@ -1,6 +1,4 @@
-﻿using FoodOrderApi.Model.DTO;
-
-namespace FoodOrderApi.Model.Domain
+﻿namespace FoodOrderApi.Model.Domain
 {
     public class RestaurantsandMenus
     {

@@ -3,28 +3,23 @@ using FluentAssertions;
 using FoodOrderApi.Controllers;
 using FoodOrderApi.DataProvider;
 using FoodOrderApi.Mappings;
+using FoodOrderApi.Model.DTO;
+using FoodOrderApi.TestApi.Mockdata;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using restaurant_xunit_test.Mockdata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
-namespace restaurant_xunit_test.Controller
+namespace FoodOrderApi.TestApi.Controller
 {
-    public class RestaurantTestController
+    public class TestRestaurantController
     {
         private Mock<IDataProvider> restaurantService;
         private IMapper mapperMock;
         private Mock<ILogger<RestaurantController>> loggerMock;
 
-        public RestaurantTestController()
+        public TestRestaurantController()
         {
             restaurantService = new Mock<IDataProvider>();
             loggerMock = new Mock<ILogger<RestaurantController>>();
@@ -41,8 +36,8 @@ namespace restaurant_xunit_test.Controller
 
         [Theory]
         [InlineData(1, 10)]
-        [InlineData(19, 2)]
-        public async Task GetAllRestaurantPagination_ShouldReturn200Status(int pageNumber, int pageSize)
+        [InlineData(3, 2)]
+        public async Task Get_AllRestaurantPaginationWithValidIndex__ShouldReturn200Status(int pageNumber, int pageSize)
         {
             /// Arrange
             restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
@@ -53,9 +48,28 @@ namespace restaurant_xunit_test.Controller
 
             /// Act
             var result = await sut.GetRestaurant(pageNumber, pageSize);
+            var model = (result as OkObjectResult).Value as List<DisplayRestaurantDTO>;
+            // /// Assert
+            model.Should().HaveCount(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize).Item1.Count());
+            result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.OK);
+        }
+
+        [Theory]
+        [InlineData(11, 10)]
+        [InlineData(10, 7)]
+        public async Task Get_AllRestaurantPaginationWithInvalidIndex__ShouldReturn200Status(int pageNumber, int pageSize)
+        {
+            /// Arrange
+            restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
+            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            sut.ControllerContext = new ControllerContext();
+            sut.ControllerContext.HttpContext = new DefaultHttpContext();
+
+            /// Act
+            var result = await sut.GetRestaurant(pageNumber, pageSize);
 
             // /// Assert
-            result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.OK);
+            result.Should().BeOfType<NotFoundObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
         }
 
         [Theory]
@@ -78,8 +92,7 @@ namespace restaurant_xunit_test.Controller
         [Theory]
         [InlineData("Annapoorna")]
         [InlineData("Bhavan")]
-        [InlineData("")]
-        public async Task SearchRestaurantandMenu_ShouldReturn200Status(string searchString)
+        public async Task SearchRestaurantandMenu_ValidSearchString_ShouldReturn200Status(string searchString)
         {
             /// Arrange
             restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
@@ -92,8 +105,23 @@ namespace restaurant_xunit_test.Controller
             result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.OK);
         }
 
+        [Theory]
+        [InlineData("")]
+        public async Task SearchRestaurantandMenu_InvalidSearchString_ShouldReturn200Status(string searchString)
+        {
+            /// Arrange
+            restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
+            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+
+            /// Act
+            var result = await sut.SearchRestaurantandMenu(searchString);
+
+            // /// Assert
+            result.Should().BeOfType<NotFoundResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+        }
+
         [Fact]
-        public async Task GetAllMenu_ShouldReturn200Status()
+        public async Task Get_AllMenu_ShouldReturn200Status()
         {
             /// Arrange
             restaurantService.Setup(_ => _.GetMenus()).ReturnsAsync(RestaurantMockData.GetAllMenus());

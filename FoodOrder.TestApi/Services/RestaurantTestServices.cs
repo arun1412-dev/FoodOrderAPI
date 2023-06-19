@@ -4,26 +4,20 @@ using FoodOrderApi.Controllers;
 using FoodOrderApi.DataProvider;
 using FoodOrderApi.Mappings;
 using FoodOrderApi.Repository;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using FoodOrderApi.TestApi.Mockdata;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
-using restaurant_xunit_test.Mockdata;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace restaurant_xunit_test.Services
+namespace FoodOrderApi.TestApi.Services
 {
-    public class RestaurantTestServices : IDisposable
+    public class TestRestaurantServices : IDisposable
     {
         protected readonly FakeFoodApiDbContext _context;
         private IMapper mapperMock;
         private Mock<ILogger<RestaurantController>> loggerMock;
 
-        public RestaurantTestServices()
+        public TestRestaurantServices()
         {
             var options = new DbContextOptionsBuilder<FakeFoodApiDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
