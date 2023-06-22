@@ -66,5 +66,38 @@ namespace Controllers.test
             results.Should().BeAssignableTo<NotFoundObjectResult>();
         }
 
+        [Fact]
+        public async Task PlaceOrder_WithValidData_ReturnsOkResult()
+        {
+            //Arrange
+            var mock = _fixture.Create<List<GetOrderDTO>>();
+            var mock1 = _fixture.Create<Task<List<Order>>>();
+            _serviceMock.Setup(x => x.PlaceOrder(mock))
+                .Returns(mock1);
+
+            //Act
+            OkObjectResult results = (OkObjectResult)await _sut.PlaceOrder(mock);
+
+            //Assert      
+            results.Value.Equals(mock);
+            results.Should().NotBeNull();
+            results.Value.Should().BeAssignableTo<IEnumerable<OrderDTO>>();
+            results.Should().BeAssignableTo<OkObjectResult>();
+        }
+        [Fact]
+        public async Task PlaceOrder_WithInvalidData_ReturnsBadRequest()
+        {
+            //Arrange
+            var mock = _fixture.Create<List<GetOrderDTO>>();
+            _serviceMock.Setup(x => x.PlaceOrder(mock));
+
+            //Act
+            var results = _sut.PlaceOrder(mock);
+
+            //Assert      
+            results.Should().NotBeNull();
+            results.Result.Should().BeAssignableTo<BadRequestResult>();
+        }
+
     }
 }
