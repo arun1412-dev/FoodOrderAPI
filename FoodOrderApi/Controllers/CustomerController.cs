@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
+using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -39,8 +40,8 @@ namespace FoodOrderApi.Controllers
         [HttpGet("Orders/{customerName}")]
         public async Task<ActionResult> GetOrders([Required] string customerName)
         {
-            var getOrders = await _dataProvider.GetOrderByName(customerName);
-            if (getOrders == null)
+            IEnumerable<Order> getOrders = await _dataProvider.GetOrderByName(customerName);
+            if (getOrders.Count() == 0)
             {
                 logger.LogInformation("Orders not found for the particular person.");
                 return NotFound("Orders not found.");

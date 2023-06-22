@@ -9,6 +9,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBF81D55-280
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CB09A498-7035-4D11-A583-DBDFA2C2BEF5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers.test", "Controllers.test\Controllers.test.csproj", "{EADF92FB-8487-413B-93B4-1644B3215344}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,12 +21,17 @@ Global
 		{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EADF92FB-8487-413B-93B4-1644B3215344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EADF92FB-8487-413B-93B4-1644B3215344}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EADF92FB-8487-413B-93B4-1644B3215344}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EADF92FB-8487-413B-93B4-1644B3215344}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0C51FC7C-68A5-4EA4-AE81-F9DBCA389B49} = {EBF81D55-2800-4743-86EC-CD7DE667FAA0}
+		{EADF92FB-8487-413B-93B4-1644B3215344} = {CB09A498-7035-4D11-A583-DBDFA2C2BEF5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {36858B52-8898-411D-A617-B155B6BFA8A0}
