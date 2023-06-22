@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 
-
 namespace UnitTests
 {
     public class AdminControllerTests
@@ -117,13 +116,14 @@ namespace UnitTests
             Assert.IsType<OkObjectResult>(okResponse.Result);
         }
 
-        //[Fact]
-        //public void AddMenuToTheRestaurant_NotExistingRestaurantIdPassed_ReturnsBadRequestResponse()
+        //[Theory]
+        //[JsonFileData("Mockjson.json", "propertyName1", typeof(string), typeof(string))]
+        //public void AddMenuToTheRestaurant_NotExistingRestaurantIdPassed_ReturnsBadRequestResponse(string data, string expected)
         //{
         //    // Arrange
         //    var notExistingGuid = Guid.NewGuid();
         //    JsonPatchDocument<Menu> jsonPatchDocument = new JsonPatchDocument<Menu>();
-        //      _dataProvider.Setup(x => x.PatchMenuItems(notExistingGuid, jsonPatchDocument)).ReturnsAsync(false);
+        //    _dataProvider.Setup(x => x.PatchMenuItems(notExistingGuid, jsonPatchDocument)).ReturnsAsync(false);
         //    var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
         //    // Act
@@ -132,6 +132,36 @@ namespace UnitTests
         //    // Assert
         //    Assert.IsType<BadRequestObjectResult>(badResponse.Result);
         //}
+        [Fact]
+        public void AddMenuToTheRestaurant_NotExistingRestaurantIdPassed_ReturnsBadRequestResponse()
+        {
+            // Arrange
+            var notExistingGuid = Guid.NewGuid();
+            JsonPatchDocument<Menu> jsonPatchDocument = new JsonPatchDocument<Menu>();
+            _dataProvider.Setup(x => x.PatchMenuItems(notExistingGuid, jsonPatchDocument));
+            var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
+
+            // Act
+            var badResponse = adminController.AddMenuToTheRestaurant(notExistingGuid, jsonPatchDocument);
+
+            // Assert
+            Assert.IsType<BadRequestObjectResult>(badResponse.Result);
+        }
+        [Fact]
+        public void AddMenuToTheRestaurant_ExistingRestaurantIdPassed_ReturnsOkResponse()
+        {
+            // Arrange
+            var ExistingGuid = Guid.Parse("BAAD586A-ACCF-4433-98F0-2F861E683354");
+            JsonPatchDocument<Menu> jsonPatchDocument = new JsonPatchDocument<Menu>();
+            _dataProvider.Setup(x => x.PatchMenuItems(ExistingGuid, jsonPatchDocument));
+            var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
+
+            // Act
+            var okResponse = adminController.AddMenuToTheRestaurant(ExistingGuid, jsonPatchDocument);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(okResponse.Result);
+        }
 
     }
 }
