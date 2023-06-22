@@ -4,6 +4,7 @@ using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace FoodOrderApi.Controllers
@@ -14,6 +15,8 @@ namespace FoodOrderApi.Controllers
         private IDataProvider _dataProvider;
         private readonly IMapper mapper;
         private readonly ILogger logger;
+
+        public IDataProvider Object { get; }
 
         public AdminController(IDataProvider dataProvider, IMapper mapper, ILogger<AdminController> logger)
         {
@@ -29,7 +32,7 @@ namespace FoodOrderApi.Controllers
             if (IsDeleted.Result)
             {
                 logger.LogInformation("Menu removed from the hotel");
-                return Ok("Menu removed from the hote");
+                return Ok("Menu removed from the hotel");
             }
             else
             {
@@ -50,20 +53,20 @@ namespace FoodOrderApi.Controllers
             else
             {
                 logger.LogInformation("Order not found.");
-                return NotFound("Can't able to found the Order.");
+                return NotFound("Can't able to find the Order.");
             }
         }
 
-        [HttpPut("Discount/{restaturant}/{discount}")]
-        public async Task<ActionResult> Discount([FromRoute] string restaturant, [FromRoute][Range(0, 100)] double discount)
+        [HttpPut("Discount/{restaurant}/{discount}")]
+        public async Task<ActionResult> Discount([FromRoute] string restaurant, [FromRoute][Range(0, 100)] double discount)
         {
-            if (_dataProvider.Discount(restaturant, discount).Result)
+            if (_dataProvider.Discount(restaurant, discount).Result)
             {
                 return Ok("success");
             }
             else
             {
-                return NotFound("Restaturant Not Found");
+                return NotFound("Restaurant Not Found");
             }
         }
 
