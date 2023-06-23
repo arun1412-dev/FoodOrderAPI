@@ -129,7 +129,7 @@ namespace UnitTests
             var badResponse = adminController.AddMenuToTheRestaurant(notExistingGuid, jsonPatchDocument);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(badResponse.Result);
+            Assert.IsType<BadRequestResult>(badResponse.Result);
         }
 
     }
