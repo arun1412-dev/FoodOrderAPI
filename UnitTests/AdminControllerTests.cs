@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Text;
+using System.Text.Json;
 
 namespace UnitTests
 {
@@ -130,7 +132,7 @@ namespace UnitTests
 
             // Assert
             Assert.IsType<BadRequestResult>(badResponse.Result);
-        }
+        }       
 
     }
 }
