@@ -168,7 +168,7 @@ namespace FoodOrderApi.DataProvider
                 jsonPatchDocument.ApplyTo(newMenu, ModelState);
                 newMenu.ProductID = Guid.NewGuid();
                 newMenu.RestaurantID = RestaurantID;
-                await foodApiDbContext.Menus.AddAsync(newMenu);
+                foodApiDbContext.Menus.Update(newMenu);
                 await foodApiDbContext.SaveChangesAsync();
                 if (!ModelState.IsValid)
                 {

@@ -42,7 +42,6 @@ namespace FoodOrderApi.TestApi.Controller
             /// Arrange
             restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
             var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
-            //sut.Response.Headers = new Dictionary<string, string>();
             sut.ControllerContext = new ControllerContext();
             sut.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -57,7 +56,7 @@ namespace FoodOrderApi.TestApi.Controller
         [Theory]
         [InlineData(11, 10)]
         [InlineData(10, 7)]
-        public async Task Get_AllRestaurantPaginationWithInvalidIndex__ShouldReturn200Status(int pageNumber, int pageSize)
+        public async Task Get_AllRestaurantPaginationWithInvalidIndex__ShouldReturn404Status(int pageNumber, int pageSize)
         {
             /// Arrange
             restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
@@ -107,7 +106,7 @@ namespace FoodOrderApi.TestApi.Controller
 
         [Theory]
         [InlineData("")]
-        public async Task SearchRestaurantandMenu_InvalidSearchString_ShouldReturn200Status(string searchString)
+        public async Task SearchRestaurantandMenu_InvalidSearchString_ShouldReturn404Status(string searchString)
         {
             /// Arrange
             restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));

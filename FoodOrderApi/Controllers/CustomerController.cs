@@ -40,7 +40,7 @@ namespace FoodOrderApi.Controllers
         public async Task<ActionResult> GetOrders([Required] string customerName)
         {
             var getOrders = await _dataProvider.GetOrderByName(customerName);
-            if (getOrders == null)
+            if (!getOrders.Any())
             {
                 logger.LogInformation("Orders not found for the particular person.");
                 return NotFound("Orders not found.");
