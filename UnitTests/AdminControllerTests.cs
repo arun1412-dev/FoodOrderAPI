@@ -132,7 +132,27 @@ namespace UnitTests
 
             // Assert
             Assert.IsType<BadRequestResult>(badResponse.Result);
-        }       
+        }
+        [Fact]
+        public async Task AddMenuToTheRestaurant_ExistingRestaurantIdPassed_ReturnsOkResponseAsync()
+        {
+            // Arrange
+            var existingGuid = Guid.Parse("BAAD586A-ACCF-4433-98F0-2F861E683354");
+            var patchDoc = new JsonPatchDocument<Menu>();
+            patchDoc.Add(p => p.ProductName, "New Name");
+            patchDoc.Add(p => p.ProductPrice, 19.99);
+
+            var menu = new Menu();
+            //_dataProvider.Setup(x => x.PatchMenuItems(existingGuid, patchDoc)).ReturnsAsync(new Menu(Guid.NewGuid(),Guid.NewGuid(),"Dosa",9.0));
+            _dataProvider.Setup(x => x.PatchMenuItems(existingGuid, patchDoc)).ReturnsAsync(menu);
+            var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
+
+            // Act
+            var badResponse = adminController.AddMenuToTheRestaurant(existingGuid, patchDoc);
+
+            // Assert
+            Assert.IsType<OkObjectResult>(badResponse.Result);
+        }
 
     }
 }
