@@ -46,6 +46,7 @@ public static class MyExtensions
 {
     public static void AddFoodOrderApi(this IServiceCollection services)
     {
+        services.AddScoped<IDbProvider, FoodApiDbContext>();
         services.AddScoped<IDataProvider, DbDataProvider>();
         //services.AddSingleton<IDataProvider, InMemoryDataProvider>();
     }

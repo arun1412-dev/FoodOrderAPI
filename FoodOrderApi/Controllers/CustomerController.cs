@@ -40,8 +40,8 @@ namespace FoodOrderApi.Controllers
         [HttpGet("Orders/{customerName}")]
         public async Task<ActionResult> GetOrders([Required] string customerName)
         {
-            IEnumerable<Order> getOrders = await _dataProvider.GetOrderByName(customerName);
-            if (getOrders.Count() == 0)
+            var getOrders = await _dataProvider.GetOrderByName(customerName);
+            if (!getOrders.Any())
             {
                 logger.LogInformation("Orders not found for the particular person.");
                 return NotFound("Orders not found.");
