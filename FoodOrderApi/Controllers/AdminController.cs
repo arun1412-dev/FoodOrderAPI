@@ -54,16 +54,16 @@ namespace FoodOrderApi.Controllers
             }
         }
 
-        [HttpPut("Discount/{restaturant}/{discount}")]
-        public async Task<ActionResult> Discount([FromRoute] string restaturant, [FromRoute][Range(0, 100)] double discount)
+        [HttpPut("Discount/{restaurantID}/{productID}/{discount}")]
+        public async Task<ActionResult> Discount([FromRoute] Guid restaurantID, [FromRoute] Guid productID, [FromRoute][Range(0, 100)] double discount)
         {
-            if (_dataProvider.Discount(restaturant, discount).Result)
+            if (_dataProvider.Discount(restaurantID, productID, discount).Result)
             {
                 return Ok("success");
             }
             else
             {
-                return NotFound("Restaturant Not Found");
+                return NotFound("Please recheck the entered fields");
             }
         }
 

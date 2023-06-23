@@ -20,7 +20,7 @@ namespace FoodOrderApi.Configurations
                                                         c => (IList<string>)c.ToList()));
             builder.Property(x => x.RestaurantLocation).HasColumnName("Address");
             builder.Property(x => x.RestaurantPhoneNumber).HasColumnName("Phone Number");
-            builder.Property(x => x.RestaurantOffer).HasColumnName("Discount");
+            //builder.Property(x => x.RestaurantOffer).HasColumnName("Discount");
             builder.Property(x => x.RestaurantName).HasColumnName("Name");
             builder.Property(x => x.RestaurantType).HasColumnName("Type");
         }

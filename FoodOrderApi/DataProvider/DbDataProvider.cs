@@ -6,6 +6,7 @@ using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using ServiceStack;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -132,21 +133,30 @@ namespace FoodOrderApi.DataProvider
             return await foodApiDbContext.Restaurants.ToListAsync();
         }
 
-        public async Task<bool> Discount(string restaturantName, double discount)
+        public async Task<bool> Discount(Guid restaurantID, Guid productID, double discount)
         {
-            var found = foodApiDbContext.Restaurants.ToList();
-            var Restaturant = found.Where(s => s.RestaurantName == restaturantName);
-            if (Restaturant.Count() != 0)
-            {
-                var restaurant = await foodApiDbContext.Restaurants.FirstOrDefaultAsync(x => x.RestaurantName == restaturantName);
-                restaurant.RestaurantOffer = discount;
-                foodApiDbContext.SaveChanges();
-                return true;
-            }
-            else
+            //var found = foodApiDbContext.Restaurants.ToList();
+            //var restaurants = found.Where(s => s.RestaurantName == restaurantName);
+            //if (restaurants.Count() != 0)
+            //{
+            //    var restaurant = await foodApiDbContext.Restaurants.FirstOrDefaultAsync(x => x.RestaurantName == restaurantName);
+            //    restaurant.RestaurantOffer = discount;
+            //    foodApiDbContext.SaveChanges();
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
+            var menu = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == restaurantID && x.ProductID == productID);
+            if(menu == null)
             {
                 return false;
             }
+            menu.ProductOffer = discount;
+            foodApiDbContext.SaveChanges();
+            return true;
+
         }
 
         public async Task<bool> DeleteMenu(Guid MenuID)

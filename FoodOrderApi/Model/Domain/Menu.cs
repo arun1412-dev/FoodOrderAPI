@@ -10,12 +10,13 @@ namespace FoodOrderApi.Model.Domain
         }
 
         [JsonConstructor]
-        public Menu(Guid productID, Guid restaurantID, string productName, double productPrice)
+        public Menu(Guid productID, Guid restaurantID, string productName, double productPrice, double restaurantOffer)
         {
             ProductID = productID;
             RestaurantID = restaurantID;
             ProductName = productName;
             ProductPrice = productPrice;
+            ProductOffer = restaurantOffer;
         }
 
         [Key]
@@ -24,6 +25,7 @@ namespace FoodOrderApi.Model.Domain
         public Guid RestaurantID { get; set; }
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }
+        public double ProductOffer { get; set; }
         public Restaurant Restaurant { get; set; }
     }
 }

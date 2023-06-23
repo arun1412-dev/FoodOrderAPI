@@ -26,7 +26,7 @@ namespace FoodOrderApi.DataProvider
 
         Task<bool> DeleteMenu(Guid MenuID);
 
-        Task<bool> Discount(string restaturantName, double discount);
+        Task<bool> Discount(Guid restaurantID, Guid productID, double discount);
 
         Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument);
     }
