@@ -139,7 +139,7 @@ namespace FoodOrderApi.DataProvider
                 return false;
             }
             menu.ProductOffer = discount;
-            foodApiDbContext.SaveChanges();
+            await foodApiDbContext.SaveChangesAsync();
             return true;
 
         }

@@ -11,16 +11,16 @@ namespace FoodOrderApi.TestApi.Mockdata
             {
                     new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("BAAD586A-ACCF-4433-98F0-2F861E683334"),
+                    RestaurantID = Guid.Parse("BAAD586A-ACCF-4433-98F0-2F861E683354"),
                     RestaurantName = "Kove",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Ramanathpuram",
-                    RestaurantOffer = 10.00
+
                 },
                     new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("F40029F8-9C8F-4ABF-8DB5-FFA01A13D1CD"),
+                    RestaurantID = Guid.Parse("F40029F8-9C8F-4ABF-8DB5-FFA00A13D1CD"),
                     RestaurantName = "Anadha Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -28,7 +28,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantOffer = 17.70
                 },new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("D487C6EC-2A8B-44A1-BA0E-F2FF24A9E7CE"),
+                    RestaurantID = Guid.Parse("D487C6EC-2A8B-44A1-BA0E-F4FF24A9E7CE"),
                     RestaurantName = "Adyar Anadha Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -36,7 +36,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantOffer = 12.50
                 },new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("A082A822-C7F0-4EA0-837D-457A5B154908"),
+                    RestaurantID = Guid.Parse("A082A822-C7F0-4EA0-837D-957A5B154908"),
                     RestaurantName = "Arya Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -45,7 +45,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                 },
                     new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("6069CED7-F6CF-4D8D-999E-78562375AD55"),
+                    RestaurantID = Guid.Parse("6069CED7-F6CF-4D8D-999E-78566375AD55"),
                     RestaurantName = "Mario Hotel",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -53,7 +53,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantOffer = 14.20
                 },new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("0C2B4710-050E-4794-8031-E5FC12EF13B4"),
+                    RestaurantID = Guid.Parse("0C2B4710-050E-4794-8031-E5FC19EF13B4"),
                     RestaurantName = "KB Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -61,7 +61,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantOffer = 8.00
                 },new Restaurant()
                 {
-                    RestaurantID = Guid.Parse("EE05C50F-D96E-4FD8-B84E-708C771DC026"),
+                    RestaurantID = Guid.Parse("EE05C50F-D96E-4FD8-B84E-708C772DC026"),
                     RestaurantName = "SMS Hotel",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -70,7 +70,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                 },
                 new Restaurant()
                 {
-                    RestaurantID =  Guid.Parse("7E83A461-5A28-4B11-83A5-31452449B7AC"),
+                    RestaurantID =  Guid.Parse("7E83A461-5A28-4B11-83A5-31458449B7AC"),
                     RestaurantName = "Annapoorna",
                     RestaurantType = "Casual Dining",
                     RestaurantPhoneNumber = 1234567890,
@@ -79,7 +79,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                 },
                 new Restaurant()
                 {
-                    RestaurantID =  Guid.Parse("7A03CA50-719F-48E7-AE0E-E4E293F3112B"),
+                    RestaurantID =  Guid.Parse("7A03CA50-719F-48E7-AE0E-E4E299F3112B"),
                     RestaurantName = "Chocolate Room",
                     RestaurantType = "Desserts and Beerages",
                     RestaurantPhoneNumber = 1234567890,
@@ -88,7 +88,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                 },
                 new Restaurant()
                 {
-                    RestaurantID =  Guid.Parse("2818B184-94BE-4A91-A3B8-A510B60BD6F5"),
+                    RestaurantID =  Guid.Parse("2818B184-94BE-4A91-A3B8-A510B00BD6F5"),
                     RestaurantName = "Orbis",
                     RestaurantType = "Multi Cuisine",
                     RestaurantPhoneNumber = 1234567890,
@@ -162,7 +162,7 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Ramanathpuram",
-                    RestaurantOffer = 10.00,
+
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },
                     new RestaurantWithMenu()
@@ -172,7 +172,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Peelamedu",
-                    RestaurantOffer = 17.70,
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },new RestaurantWithMenu()
                 {
@@ -181,7 +180,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Perambur",
-                    RestaurantOffer = 12.50,
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },new RestaurantWithMenu()
                 {
@@ -190,7 +188,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Kalpakam",
-                    RestaurantOffer = 11.40,
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },
                     new RestaurantWithMenu()
@@ -200,7 +197,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Mars",
-                    RestaurantOffer = 14.20,
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },new RestaurantWithMenu()
                 {
@@ -209,7 +205,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Jupiter",
-                    RestaurantOffer = 8.00,
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },new RestaurantWithMenu()
                 {
@@ -218,7 +213,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Pluto",
-                    RestaurantOffer = 12.00,
                     Menus = new List<string> { "Thai Broccoli Salad", "Curd Rice Aracini", "Chettinad Cutlet" }
                 },
                 new RestaurantWithMenu()
@@ -228,7 +222,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Casual Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "RS Puram",
-                    RestaurantOffer = 24.00,
                     Menus = new List<string> { "Idly(2)", "Pongal", "Roast" }
                 },
 
@@ -239,7 +232,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Desserts and Beerages",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Race Course Road",
-                    RestaurantOffer = 25.50,
                     Menus = new List<string> { "Chocolate Sizzler", "Choco Brownie Bomb", "Chocolate Cookies" }
                 },
 
@@ -250,7 +242,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Multi Cuisine",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Avinashi Road",
-                    RestaurantOffer = 20.00,
                     Menus = new List<string> { "Vegetable Club Sandwich", "Veg Combo Meal", "Orbis Signature Rice" }
                 }
             };
