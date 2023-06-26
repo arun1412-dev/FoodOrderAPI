@@ -1,0 +1,14 @@
+{
+  "propertyName1": [
+    {
+      "value": "Dosa",
+      "path": "/ProductName",
+      "op": "add"
+    },
+    {
+      "value": 60,
+      "path": "/ProductPrice",
+      "op": "add"
+    }
+  ]
+}
