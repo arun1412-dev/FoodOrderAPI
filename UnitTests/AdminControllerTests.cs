@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Text;
+using System.Text.Json;
 
 namespace UnitTests
 {
@@ -44,7 +46,7 @@ namespace UnitTests
         public void DeleteMenu_ExistingGuidPassed_ReturnsOkResponse(Guid MenuID)
         {
             // Arrange
-            _dataProvider.Setup(x => x.DeleteMenu(MenuID)).ReturnsAsync(true);
+             _dataProvider.Setup(x => x.DeleteMenu(MenuID)).ReturnsAsync(true);
             var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
             // Act
@@ -86,30 +88,30 @@ namespace UnitTests
         }
 
         [Theory]
-        [InlineData("Anandhaas", 200)]
-        public void Discount_NotExistingRestaurantPassed_ReturnsOkResponse(string restaurant, double discount)
+        [InlineData("BAAD586A-ACCF-4433-98F1-2F861E683354", "E0194510-6AD1-4AC2-BF32-E572CAA09BA1", 20 )]
+        public void Discount_NotExistingRestaurantPassed_ReturnsNotFoundResponse(Guid restaurantID, Guid productID, double discount)
         {
             // Arrange
-            _dataProvider.Setup(x => x.Discount(restaurant, discount)).ReturnsAsync(false);
+            _dataProvider.Setup(x => x.Discount(restaurantID, productID, discount)).ReturnsAsync(false);
             var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
             // Act
-            var NotFoundResponse = adminController.Discount(restaurant, discount);
+            var NotFoundResponse = adminController.Discount(restaurantID, productID, discount);
 
             // Assert
             Assert.IsType<NotFoundObjectResult>(NotFoundResponse.Result);
         }
 
         [Theory]
-        [InlineData("Orbis", 90)]
-        public void Discount_ExistingRestaurantPassed_ReturnsOkResponse(string restaurant, double discount)
+        [InlineData("BAAD586A-ACCF-4433-98F0-2F861E683354", "E0194510-6AD1-4AC2-BF31-E572CAA09BA1", 30)]
+        public void Discount_ExistingRestaurantPassed_ReturnsOkResponse(Guid restaurantID, Guid productID, double discount)
         {
             // Arrange
-            _dataProvider.Setup(x => x.Discount(restaurant, discount)).ReturnsAsync(true);
+            _dataProvider.Setup(x => x.Discount(restaurantID, productID, discount)).ReturnsAsync(true);
             var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
             // Act
-            var okResponse = adminController.Discount(restaurant, discount);
+            var okResponse = adminController.Discount(restaurantID, productID, discount);
 
             // Assert
             Assert.IsType<OkObjectResult>(okResponse.Result);

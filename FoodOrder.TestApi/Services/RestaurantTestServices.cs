@@ -58,7 +58,6 @@ namespace FoodOrderApi.TestApi.Services
         public async Task GetAllMenus_ReturnMenuCollection()
         {
             /// Arrange
-            _context.Restaurants.AddRange(RestaurantMockData.GetAllRestaurants());
             _context.Menus.AddRange(RestaurantMockData.GetAllMenus());
             await _context.SaveChangesAsync();
 

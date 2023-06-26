@@ -42,7 +42,7 @@ namespace FoodOrderApi.Controllers
             else
             {
                 Response.Headers.Add("X-Pagination", System.Text.Json.JsonSerializer.Serialize(metadata));
-                return BadRequest("Restaurants not found!");
+                return NotFound("Restaurants not found!");
             }
         }
 
@@ -60,20 +60,25 @@ namespace FoodOrderApi.Controllers
             if (searchString.Trim().Length != 0)
             {
                 var searched = (await _dataProvider.SearchMenuAndRestaurant(searchString.Trim()));
-                if (searched.menu.Count() > 0 && searched.restaurant.Count() > 0)
+                var restaurantDTOMapper = mapper.Map<List<RestaurantDTO>>(searched.restaurant);
+                var menuDTOMapper = mapper.Map<List<DisplayMenuDTO>>(searched.menu);
+                RestaurantsandMenusDTO restaurantsandMenusDTOs = new RestaurantsandMenusDTO();
+                restaurantsandMenusDTOs.menu = menuDTOMapper;
+                restaurantsandMenusDTOs.restaurant = restaurantDTOMapper;
+                if (restaurantsandMenusDTOs.menu.Count() > 0 && restaurantsandMenusDTOs.restaurant.Count() > 0)
                 {
-                    return Ok(searched);
+                    return Ok(restaurantsandMenusDTOs);
                 }
                 else if (searched.menu.Count() > 0)
                 {
-                    return Ok(searched.menu);
+                    return Ok(restaurantsandMenusDTOs.menu);
                 }
-                else if (searched.restaurant.Count() > 0)
+                else if (restaurantsandMenusDTOs.restaurant.Count() > 0)
                 {
-                    return Ok(searched.restaurant);
+                    return Ok(restaurantsandMenusDTOs.restaurant);
                 }
             }
-            return BadRequest();
+            return NotFound();
         }
 
         [HttpGet("Menu")]
