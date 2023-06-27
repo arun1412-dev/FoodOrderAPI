@@ -26,7 +26,6 @@ namespace FoodOrderApi.Controllers
         [ValidateModel]
         public async Task<ActionResult> PlaceOrder([FromBody] List<GetOrderDTO> newCustomerOrder)
         {
-            var newor = newCustomerOrder;
             var OrderDetails = await _dataProvider.PlaceOrder(newCustomerOrder);
             if (OrderDetails == null)
             {

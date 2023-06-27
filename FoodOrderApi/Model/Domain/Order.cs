@@ -9,7 +9,6 @@ namespace FoodOrderApi.Model.Domain
         public Guid ProductID { get; set; }
         public string CustomerName { get; set; }
         public bool IsDelivered { get; set; }
-
         public Restaurant Restaurant { get; set; }
 
         [ForeignKey("ProductID")]

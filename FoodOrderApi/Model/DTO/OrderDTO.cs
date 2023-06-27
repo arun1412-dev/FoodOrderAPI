@@ -7,7 +7,6 @@
 
         //Navigation
         public RestaurantDTO Restaurant { get; set; }
-
         public MenuDTO Menu { get; set; }
     }
 }

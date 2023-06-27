@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FoodOrderApi.CustomActionFilter;
 using FoodOrderApi.DataProvider;
 using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
@@ -60,7 +61,7 @@ namespace FoodOrderApi.Controllers
         }
 
         [HttpPut("Discount/{restaurantID}/{productID}/{discount}")]
-        public async Task<ActionResult> Discount([FromRoute] Guid restaurantID, [FromRoute] Guid productID, [FromRoute][Range(0, 100)] double discount)
+        public async Task<ActionResult> ChangeProductDiscount([FromRoute] Guid restaurantID, [FromRoute] Guid productID, [FromRoute][Range(0, 100)] double discount)
         {
             if (_dataProvider.Discount(restaurantID, productID, discount).Result)
             {

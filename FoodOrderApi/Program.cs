@@ -7,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-//builder.Services.AddControllers();
 builder.Services.AddControllers(options =>
 {
     options.ReturnHttpNotAcceptable = true;
@@ -24,7 +23,7 @@ builder.Services.AddFoodOrderApi();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddDbContext<FoodApiDbContext>(options =>
     options.UseSqlite("Data Source = foodorder.db"));
-//builder.Services.AddSingleton<IDataProvider, InMemoryDataProvider>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -42,12 +41,11 @@ app.MapControllers();
 
 app.Run();
 
-public static class MyExtensions
+public static class FoodOrderApiDependencies
 {
     public static void AddFoodOrderApi(this IServiceCollection services)
     {
         services.AddScoped<IDbProvider, FoodApiDbContext>();
         services.AddScoped<IDataProvider, DbDataProvider>();
-        //services.AddSingleton<IDataProvider, InMemoryDataProvider>();
     }
 }
