@@ -4,10 +4,7 @@ using FoodOrderApi.Model.Domain;
 using FoodOrderApi.Model.DTO;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json;
-
 
 namespace FoodOrderApi.Controllers
 {
@@ -43,7 +40,7 @@ namespace FoodOrderApi.Controllers
             }
         }
 
-        [HttpDelete("OrderDelivered/{orderId:GUID}")]
+        [HttpPut("OrderDelivered/{orderId:GUID}")]
         public async Task<ActionResult> OrderDelivered([Required] Guid orderId)
         {
             var IsDelivered = _dataProvider.OrderDelivered(orderId);

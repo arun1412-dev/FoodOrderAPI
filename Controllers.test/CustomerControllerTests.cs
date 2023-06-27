@@ -16,7 +16,7 @@ namespace Controllers.test
     {
         private readonly IFixture _fixture;
         private readonly Mock<IDataProvider> _serviceMock;
-        private readonly CustomerController _sut;
+        private readonly CustomerController _customerController;
         private readonly IMapper _mapper;
         private readonly ILogger<CustomerController> _logger;
 
@@ -32,7 +32,7 @@ namespace Controllers.test
             });
             IMapper _mapper = mappingConfig.CreateMapper();
             this._mapper = _mapper;
-            _sut = new CustomerController(_serviceMock.Object, this._mapper, _logger);
+            _customerController = new CustomerController(_serviceMock.Object, this._mapper, _logger);
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Controllers.test
                 .Returns(mock);
 
             //Act
-            OkObjectResult results = (OkObjectResult)await _sut.GetOrders("string");
+            OkObjectResult results = (OkObjectResult)await _customerController.GetOrders("string");
 
             //Assert
             results.Value.Equals(mock);
@@ -60,7 +60,7 @@ namespace Controllers.test
             _serviceMock.Setup(x => x.GetOrderByName("string"));
 
             //Act
-            var results = await _sut.GetOrders("string");
+            var results = await _customerController.GetOrders("string");
 
             //Assert
             results.Should().NotBeNull();
@@ -77,7 +77,7 @@ namespace Controllers.test
                 .Returns(mock1);
 
             //Act
-            OkObjectResult results = (OkObjectResult)await _sut.PlaceOrder(mock);
+            OkObjectResult results = (OkObjectResult)await _customerController.PlaceOrder(mock);
 
             //Assert
             results.Value.Equals(mock);
@@ -94,7 +94,7 @@ namespace Controllers.test
             _serviceMock.Setup(x => x.PlaceOrder(mock));
 
             //Act
-            var results = _sut.PlaceOrder(mock);
+            var results = _customerController.PlaceOrder(mock);
 
             //Assert
             results.Should().NotBeNull();

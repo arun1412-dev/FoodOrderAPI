@@ -6,7 +6,6 @@ using FoodOrderApi.Repository;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ServiceStack;
 
 namespace FoodOrderApi.DataProvider
 {
@@ -132,16 +131,14 @@ namespace FoodOrderApi.DataProvider
 
         public async Task<bool> Discount(Guid restaurantID, Guid productID, double discount)
         {
-            
             var menu = await _foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == restaurantID && x.ProductID == productID);
-            if(menu == null)
+            if (menu == null)
             {
                 return false;
             }
             menu.ProductOffer = discount;
             await _foodApiDbContext.SaveChangesAsync();
             return true;
-
         }
 
         public async Task<bool> DeleteMenu(Guid MenuID)

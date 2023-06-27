@@ -45,10 +45,10 @@ namespace FoodOrderApi.TestApi.Services
             _context.Restaurants.AddRange(RestaurantMockData.GetAllRestaurants());
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
+            var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
-            var result = await sut.GetRestaurant();
+            var result = await dbDataProvider.GetRestaurant();
 
             /// Assert
             result.Should().HaveCount(RestaurantMockData.GetAllRestaurants().Count);
@@ -61,10 +61,10 @@ namespace FoodOrderApi.TestApi.Services
             _context.Menus.AddRange(RestaurantMockData.GetAllMenus());
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
+            var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
-            var result = await sut.GetMenus();
+            var result = await dbDataProvider.GetMenus();
 
             /// Assert
             result.Should().HaveCount(RestaurantMockData.GetAllMenus().Count);
@@ -74,16 +74,16 @@ namespace FoodOrderApi.TestApi.Services
         [InlineData("Annapoorna")]
         [InlineData("Aravind Hotel")]
         [InlineData("")]
-        public async Task GetFilterRestaurant_ReturnRestaurantsCollection(string stringToBeFiltered)
+        public async Task GetFilterRestaurantName_ValidFilterString_ReturnRestaurantsCollection(string stringToBeFiltered)
         {
             /// Arrange
             _context.Restaurants.AddRange(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered));
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
+            var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
-            var result = await sut.FilterRestaurant(stringToBeFiltered);
+            var result = await dbDataProvider.FilterRestaurant(stringToBeFiltered);
 
             /// Assert
             result.Should().HaveCount(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered).Count);
@@ -92,16 +92,16 @@ namespace FoodOrderApi.TestApi.Services
         [Theory]
         [InlineData("Annapoorna")]
         [InlineData("Aravind Hotel")]
-        public async Task GetSearchRestaurantAndMenu_ReturnRestaurantAndMenuCollection(string stringToBeFiltered)
+        public async Task GetSearchRestaurantAndMenu_ValidSearchString_ReturnRestaurantAndMenuCollection(string stringToBeFiltered)
         {
             /// Arrange
             _context.Restaurants.AddRange(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered));
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
+            var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
-            var result = await sut.SearchMenuAndRestaurant(stringToBeFiltered);
+            var result = await dbDataProvider.SearchMenuAndRestaurant(stringToBeFiltered);
             /// Assert
             result.menu.Should().HaveCount(RestaurantMockData.GetSearchRestaurantAndMenu(stringToBeFiltered).menu.Count);
             result.restaurant.Should().HaveCount(RestaurantMockData.GetSearchRestaurantAndMenu(stringToBeFiltered).restaurant.Count);

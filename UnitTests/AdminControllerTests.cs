@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
-using System.Text;
-using System.Text.Json;
 
 namespace UnitTests
 {
@@ -46,7 +44,7 @@ namespace UnitTests
         public void DeleteMenu_ExistingGuidPassed_ReturnsOkResponse(Guid MenuID)
         {
             // Arrange
-             _dataProvider.Setup(x => x.DeleteMenu(MenuID)).ReturnsAsync(true);
+            _dataProvider.Setup(x => x.DeleteMenu(MenuID)).ReturnsAsync(true);
             var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
             // Act
@@ -88,7 +86,7 @@ namespace UnitTests
         }
 
         [Theory]
-        [InlineData("BAAD586A-ACCF-4433-98F1-2F861E683354", "E0194510-6AD1-4AC2-BF32-E572CAA09BA1", 20 )]
+        [InlineData("BAAD586A-ACCF-4433-98F1-2F861E683354", "E0194510-6AD1-4AC2-BF32-E572CAA09BA1", 20)]
         public void Discount_NotExistingRestaurantPassed_ReturnsNotFoundResponse(Guid restaurantID, Guid productID, double discount)
         {
             // Arrange

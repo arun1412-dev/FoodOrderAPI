@@ -33,7 +33,6 @@ namespace FoodOrderApi.Repository
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Ramanathpuram",
-                    
                 },
                     new Restaurant()
                 {

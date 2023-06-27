@@ -16,7 +16,6 @@ namespace FoodOrderApi.TestApi.Mockdata
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
                     RestaurantLocation = "Ramanathpuram",
-
                 },
                     new Restaurant()
                 {
