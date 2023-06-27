@@ -339,11 +339,6 @@ namespace FoodOrderApi.Migrations
                         .HasColumnType("TEXT")
                         .HasColumnName("Name");
 
-                    b.Property<double>("RestaurantOffer")
-                        .HasPrecision(2)
-                        .HasColumnType("REAL")
-                        .HasColumnName("Discount");
-
                     b.Property<int>("RestaurantPhoneNumber")
                         .HasColumnType("INTEGER")
                         .HasColumnName("Phone Number");
@@ -363,7 +358,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("baad586a-accf-4433-98f0-2f861e683354"),
                             RestaurantLocation = "Ramanathpuram",
                             RestaurantName = "Kove",
-                            RestaurantOffer = 0.0,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -372,7 +366,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"),
                             RestaurantLocation = "Peelamedu",
                             RestaurantName = "Anadha Bhavan",
-                            RestaurantOffer = 17.699999999999999,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -381,7 +374,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"),
                             RestaurantLocation = "Perambur",
                             RestaurantName = "Adyar Anadha Bhavan",
-                            RestaurantOffer = 12.5,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -390,7 +382,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"),
                             RestaurantLocation = "Kalpakam",
                             RestaurantName = "Arya Bhavan",
-                            RestaurantOffer = 11.4,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -399,7 +390,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"),
                             RestaurantLocation = "Mars",
                             RestaurantName = "Mario Hotel",
-                            RestaurantOffer = 14.199999999999999,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -408,7 +398,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"),
                             RestaurantLocation = "Jupiter",
                             RestaurantName = "KB Bhavan",
-                            RestaurantOffer = 8.0,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -417,7 +406,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"),
                             RestaurantLocation = "Pluto",
                             RestaurantName = "SMS Hotel",
-                            RestaurantOffer = 12.0,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Fine Dining"
                         },
@@ -426,7 +414,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"),
                             RestaurantLocation = "RS Puram",
                             RestaurantName = "Annapoorna",
-                            RestaurantOffer = 24.0,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Casual Dining"
                         },
@@ -435,7 +422,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"),
                             RestaurantLocation = "Race Course Road",
                             RestaurantName = "Chocolate Room",
-                            RestaurantOffer = 25.5,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Desserts and Beerages"
                         },
@@ -444,7 +430,6 @@ namespace FoodOrderApi.Migrations
                             RestaurantID = new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"),
                             RestaurantLocation = "Avinashi Road",
                             RestaurantName = "Orbis",
-                            RestaurantOffer = 20.0,
                             RestaurantPhoneNumber = 1234567890,
                             RestaurantType = "Multi Cuisine"
                         });

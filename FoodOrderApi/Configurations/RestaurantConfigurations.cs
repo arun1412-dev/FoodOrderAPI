@@ -10,7 +10,6 @@ namespace FoodOrderApi.Configurations
         {
             builder.Property(x => x.RestaurantLocation).HasColumnName("Address");
             builder.Property(x => x.RestaurantPhoneNumber).HasColumnName("Phone Number");
-            builder.Property(x => x.RestaurantOffer).HasColumnName("Discount").HasPrecision(2);
             builder.Property(x => x.RestaurantName).HasColumnName("Name");
             builder.Property(x => x.RestaurantType).HasColumnName("Type");
         }

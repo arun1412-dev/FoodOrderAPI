@@ -40,7 +40,6 @@ namespace UnitTests
         [InlineData("AE527A12-BE03-4AC1-8206-7345A1A90BF6")]
         public void DeleteMenu_ExistingGuidPassed_ReturnsOkResponse(Guid MenuID)
         {
-            // Arrange
             _dataProvider.Setup(x => x.DeleteMenu(MenuID)).ReturnsAsync(true);
             var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
@@ -56,7 +55,6 @@ namespace UnitTests
             _dataProvider.Setup(x => x.OrderDelivered(notExistingGuid)).ReturnsAsync(false);
             var adminController = new AdminController(_dataProvider.Object, _mapper.Object, _logger.Object);
 
-            // Act
             var NotFoundResponse = adminController.OrderDelivered(notExistingGuid);
 
             Assert.IsType<NotFoundObjectResult>(NotFoundResponse.Result);

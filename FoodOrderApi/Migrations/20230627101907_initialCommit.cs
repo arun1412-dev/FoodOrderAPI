@@ -21,8 +21,7 @@ namespace FoodOrderApi.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Type = table.Column<string>(type: "TEXT", nullable: false),
                     PhoneNumber = table.Column<int>(name: "Phone Number", type: "INTEGER", nullable: false),
-                    Address = table.Column<string>(type: "TEXT", nullable: false),
-                    Discount = table.Column<double>(type: "REAL", precision: 2, nullable: false)
+                    Address = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,19 +111,19 @@ namespace FoodOrderApi.Migrations
 
             migrationBuilder.InsertData(
                 table: "Restaurants",
-                columns: new[] { "RestaurantID", "Address", "Name", "Discount", "Phone Number", "Type" },
+                columns: new[] { "RestaurantID", "Address", "Name", "Phone Number", "Type" },
                 values: new object[,]
                 {
-                    { new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"), "Jupiter", "KB Bhavan", 8.0, 1234567890, "Fine Dining" },
-                    { new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"), "Avinashi Road", "Orbis", 20.0, 1234567890, "Multi Cuisine" },
-                    { new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"), "Mars", "Mario Hotel", 14.199999999999999, 1234567890, "Fine Dining" },
-                    { new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"), "Race Course Road", "Chocolate Room", 25.5, 1234567890, "Desserts and Beerages" },
-                    { new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"), "RS Puram", "Annapoorna", 24.0, 1234567890, "Casual Dining" },
-                    { new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"), "Kalpakam", "Arya Bhavan", 11.4, 1234567890, "Fine Dining" },
-                    { new Guid("baad586a-accf-4433-98f0-2f861e683354"), "Ramanathpuram", "Kove", 0.0, 1234567890, "Fine Dining" },
-                    { new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"), "Perambur", "Adyar Anadha Bhavan", 12.5, 1234567890, "Fine Dining" },
-                    { new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"), "Pluto", "SMS Hotel", 12.0, 1234567890, "Fine Dining" },
-                    { new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"), "Peelamedu", "Anadha Bhavan", 17.699999999999999, 1234567890, "Fine Dining" }
+                    { new Guid("0c2b4710-050e-4794-8031-e5fc19ef13b4"), "Jupiter", "KB Bhavan", 1234567890, "Fine Dining" },
+                    { new Guid("2818b184-94be-4a91-a3b8-a510b00bd6f5"), "Avinashi Road", "Orbis", 1234567890, "Multi Cuisine" },
+                    { new Guid("6069ced7-f6cf-4d8d-999e-78566375ad55"), "Mars", "Mario Hotel", 1234567890, "Fine Dining" },
+                    { new Guid("7a03ca50-719f-48e7-ae0e-e4e299f3112b"), "Race Course Road", "Chocolate Room", 1234567890, "Desserts and Beerages" },
+                    { new Guid("7e83a461-5a28-4b11-83a5-31458449b7ac"), "RS Puram", "Annapoorna", 1234567890, "Casual Dining" },
+                    { new Guid("a082a822-c7f0-4ea0-837d-957a5b154908"), "Kalpakam", "Arya Bhavan", 1234567890, "Fine Dining" },
+                    { new Guid("baad586a-accf-4433-98f0-2f861e683354"), "Ramanathpuram", "Kove", 1234567890, "Fine Dining" },
+                    { new Guid("d487c6ec-2a8b-44a1-ba0e-f4ff24a9e7ce"), "Perambur", "Adyar Anadha Bhavan", 1234567890, "Fine Dining" },
+                    { new Guid("ee05c50f-d96e-4fd8-b84e-708c772dc026"), "Pluto", "SMS Hotel", 1234567890, "Fine Dining" },
+                    { new Guid("f40029f8-9c8f-4abf-8db5-ffa00a13d1cd"), "Peelamedu", "Anadha Bhavan", 1234567890, "Fine Dining" }
                 });
 
             migrationBuilder.InsertData(

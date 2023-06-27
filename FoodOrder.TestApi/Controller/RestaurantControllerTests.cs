@@ -44,7 +44,6 @@ namespace FoodOrderApi.TestApi.Controller
             restaurantController.ControllerContext = new ControllerContext();
             restaurantController.ControllerContext.HttpContext = new DefaultHttpContext();
 
-            /// Act
             var result = await restaurantController.GetRestaurant(pageNumber, pageSize);
             var model = (result as OkObjectResult).Value as List<DisplayRestaurantDTO>;
 
@@ -62,7 +61,6 @@ namespace FoodOrderApi.TestApi.Controller
             restaurantController.ControllerContext = new ControllerContext();
             restaurantController.ControllerContext.HttpContext = new DefaultHttpContext();
 
-            /// Act
             var result = await restaurantController.GetRestaurant(pageNumber, pageSize);
 
             result.Should().BeOfType<NotFoundObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -77,7 +75,6 @@ namespace FoodOrderApi.TestApi.Controller
             _restaurantService.Setup(_ => _.FilterRestaurant(filterString)).ReturnsAsync(RestaurantMockData.GetFilteredRestaurants(filterString));
             var restaurantController = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await restaurantController.GetRestaurantByName(filterString);
 
             result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.OK);
@@ -91,7 +88,6 @@ namespace FoodOrderApi.TestApi.Controller
             _restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
             var restaurantController = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await restaurantController.SearchRestaurantandMenu(searchString);
 
             result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.OK);
@@ -104,7 +100,6 @@ namespace FoodOrderApi.TestApi.Controller
             _restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
             var restaurantController = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await restaurantController.SearchRestaurantandMenu(searchString);
 
             result.Should().BeOfType<NotFoundResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
@@ -116,7 +111,6 @@ namespace FoodOrderApi.TestApi.Controller
             _restaurantService.Setup(_ => _.GetMenus()).ReturnsAsync(RestaurantMockData.GetAllMenus());
             var restaurantController = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await restaurantController.GetMenu();
 
             result.Should().BeOfType<OkObjectResult>().Which.StatusCode.Should().Be((int)HttpStatusCode.OK);

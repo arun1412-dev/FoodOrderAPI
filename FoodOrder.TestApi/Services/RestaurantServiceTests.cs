@@ -46,7 +46,6 @@ namespace FoodOrderApi.TestApi.Services
 
             var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await dbDataProvider.GetRestaurant();
 
             result.Should().HaveCount(RestaurantMockData.GetAllRestaurants().Count);
@@ -60,7 +59,6 @@ namespace FoodOrderApi.TestApi.Services
 
             var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await dbDataProvider.GetMenus();
 
             result.Should().HaveCount(RestaurantMockData.GetAllMenus().Count);
@@ -77,7 +75,6 @@ namespace FoodOrderApi.TestApi.Services
 
             var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await dbDataProvider.FilterRestaurant(stringToBeFiltered);
 
             result.Should().HaveCount(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered).Count);
@@ -93,7 +90,6 @@ namespace FoodOrderApi.TestApi.Services
 
             var dbDataProvider = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
-            /// Act
             var result = await dbDataProvider.SearchMenuAndRestaurant(stringToBeFiltered);
             /// Assert
             result.menu.Should().HaveCount(RestaurantMockData.GetSearchRestaurantAndMenu(stringToBeFiltered).menu.Count);

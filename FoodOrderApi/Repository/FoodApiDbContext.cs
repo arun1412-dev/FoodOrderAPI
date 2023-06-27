@@ -32,7 +32,7 @@ namespace FoodOrderApi.Repository
                     RestaurantName = "Kove",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Ramanathpuram",
+                    RestaurantLocation = "Ramanathpuram"
                 },
                     new Restaurant()
                 {
@@ -40,24 +40,21 @@ namespace FoodOrderApi.Repository
                     RestaurantName = "Anadha Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Peelamedu",
-                    RestaurantOffer = 17.70
+                    RestaurantLocation = "Peelamedu"
                 },new Restaurant()
                 {
                     RestaurantID = Guid.Parse("D487C6EC-2A8B-44A1-BA0E-F4FF24A9E7CE"),
                     RestaurantName = "Adyar Anadha Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Perambur",
-                    RestaurantOffer = 12.50
+                    RestaurantLocation = "Perambur"
                 },new Restaurant()
                 {
                     RestaurantID = Guid.Parse("A082A822-C7F0-4EA0-837D-957A5B154908"),
                     RestaurantName = "Arya Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Kalpakam",
-                    RestaurantOffer = 11.40
+                    RestaurantLocation = "Kalpakam"
                 },
                     new Restaurant()
                 {
@@ -65,24 +62,21 @@ namespace FoodOrderApi.Repository
                     RestaurantName = "Mario Hotel",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Mars",
-                    RestaurantOffer = 14.20
+                    RestaurantLocation = "Mars"
                 },new Restaurant()
                 {
                     RestaurantID = Guid.Parse("0C2B4710-050E-4794-8031-E5FC19EF13B4"),
                     RestaurantName = "KB Bhavan",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Jupiter",
-                    RestaurantOffer = 8.00
+                    RestaurantLocation = "Jupiter"
                 },new Restaurant()
                 {
                     RestaurantID = Guid.Parse("EE05C50F-D96E-4FD8-B84E-708C772DC026"),
                     RestaurantName = "SMS Hotel",
                     RestaurantType = "Fine Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Pluto",
-                    RestaurantOffer = 12.00
+                    RestaurantLocation = "Pluto"
                 },
                 new Restaurant()
                 {
@@ -90,8 +84,7 @@ namespace FoodOrderApi.Repository
                     RestaurantName = "Annapoorna",
                     RestaurantType = "Casual Dining",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "RS Puram",
-                    RestaurantOffer = 24.00
+                    RestaurantLocation = "RS Puram"
                 },
                 new Restaurant()
                 {
@@ -99,8 +92,7 @@ namespace FoodOrderApi.Repository
                     RestaurantName = "Chocolate Room",
                     RestaurantType = "Desserts and Beerages",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Race Course Road",
-                    RestaurantOffer = 25.50
+                    RestaurantLocation = "Race Course Road"
                 },
                 new Restaurant()
                 {
@@ -108,8 +100,7 @@ namespace FoodOrderApi.Repository
                     RestaurantName = "Orbis",
                     RestaurantType = "Multi Cuisine",
                     RestaurantPhoneNumber = 1234567890,
-                    RestaurantLocation = "Avinashi Road",
-                    RestaurantOffer = 20.00
+                    RestaurantLocation = "Avinashi Road"
                 }
             };
             modelBuilder.Entity<Restaurant>().HasData(restaurants);

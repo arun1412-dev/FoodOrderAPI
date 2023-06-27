@@ -21,6 +21,7 @@ namespace FoodOrderApi.Model.Domain
 
         [Key]
         public Guid ProductID { get; set; }
+
         public Guid RestaurantID { get; set; }
         public string ProductName { get; set; }
         public double ProductPrice { get; set; }

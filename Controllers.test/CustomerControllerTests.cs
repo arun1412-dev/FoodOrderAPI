@@ -44,7 +44,6 @@ namespace Controllers.test
 
             OkObjectResult results = (OkObjectResult)await _customerController.GetOrders("string");
 
-            //Assert
             results.Value.Equals(mock);
             results.Should().NotBeNull();
             results.Value.Should().BeAssignableTo<IEnumerable<OrderDTO>>();
@@ -84,10 +83,8 @@ namespace Controllers.test
             var mock = _fixture.Create<List<GetOrderDTO>>();
             _serviceMock.Setup(x => x.PlaceOrder(mock));
 
-            //Act
             var results = _customerController.PlaceOrder(mock);
 
-            //Assert
             results.Should().NotBeNull();
             results.Result.Should().BeAssignableTo<BadRequestResult>();
         }
