@@ -22,7 +22,6 @@ namespace FoodOrderApi.Controllers
             this._logger = logger;
         }
 
-        //[HttpGet("Restaurants.{format}"), FormatFilter]
         [HttpGet]
         public async Task<ActionResult> GetRestaurant([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 3)
         {

@@ -41,7 +41,6 @@ namespace FoodOrderApi.TestApi.Services
         [Fact]
         public async Task GetAllRestaurant_ReturnRestaurantCollection()
         {
-            /// Arrange
             _context.Restaurants.AddRange(RestaurantMockData.GetAllRestaurants());
             await _context.SaveChangesAsync();
 
@@ -50,14 +49,12 @@ namespace FoodOrderApi.TestApi.Services
             /// Act
             var result = await dbDataProvider.GetRestaurant();
 
-            /// Assert
             result.Should().HaveCount(RestaurantMockData.GetAllRestaurants().Count);
         }
 
         [Fact]
         public async Task GetAllMenus_ReturnMenuCollection()
         {
-            /// Arrange
             _context.Menus.AddRange(RestaurantMockData.GetAllMenus());
             await _context.SaveChangesAsync();
 
@@ -66,7 +63,6 @@ namespace FoodOrderApi.TestApi.Services
             /// Act
             var result = await dbDataProvider.GetMenus();
 
-            /// Assert
             result.Should().HaveCount(RestaurantMockData.GetAllMenus().Count);
         }
 
@@ -76,7 +72,6 @@ namespace FoodOrderApi.TestApi.Services
         [InlineData("")]
         public async Task GetFilterRestaurantName_ValidFilterString_ReturnRestaurantsCollection(string stringToBeFiltered)
         {
-            /// Arrange
             _context.Restaurants.AddRange(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered));
             await _context.SaveChangesAsync();
 
@@ -85,7 +80,6 @@ namespace FoodOrderApi.TestApi.Services
             /// Act
             var result = await dbDataProvider.FilterRestaurant(stringToBeFiltered);
 
-            /// Assert
             result.Should().HaveCount(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered).Count);
         }
 
@@ -94,7 +88,6 @@ namespace FoodOrderApi.TestApi.Services
         [InlineData("Aravind Hotel")]
         public async Task GetSearchRestaurantAndMenu_ValidSearchString_ReturnRestaurantAndMenuCollection(string stringToBeFiltered)
         {
-            /// Arrange
             _context.Restaurants.AddRange(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered));
             await _context.SaveChangesAsync();
 

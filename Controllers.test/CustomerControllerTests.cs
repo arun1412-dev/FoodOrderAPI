@@ -38,12 +38,10 @@ namespace Controllers.test
         [Fact]
         public async Task GetOrderByName_WithValidCustomerName_ReturnsOkResult()
         {
-            //Arrange
             var mock = _fixture.Create<Task<IEnumerable<Order>>>();
             _serviceMock.Setup(x => x.GetOrderByName("string"))
                 .Returns(mock);
 
-            //Act
             OkObjectResult results = (OkObjectResult)await _customerController.GetOrders("string");
 
             //Assert
@@ -56,13 +54,10 @@ namespace Controllers.test
         [Fact]
         public async Task GetOrderByName_WithInvalidCustomerName_ReturnsNotFoundResult()
         {
-            //Arrange
             _serviceMock.Setup(x => x.GetOrderByName("string"));
 
-            //Act
             var results = await _customerController.GetOrders("string");
 
-            //Assert
             results.Should().NotBeNull();
             results.Should().BeAssignableTo<NotFoundObjectResult>();
         }
@@ -70,16 +65,13 @@ namespace Controllers.test
         [Fact]
         public async Task PlaceOrder_WithValidData_ReturnsOkResult()
         {
-            //Arrange
             var mock = _fixture.Create<List<GetOrderDTO>>();
             var mock1 = _fixture.Create<Task<List<Order>>>();
             _serviceMock.Setup(x => x.PlaceOrder(mock))
                 .Returns(mock1);
 
-            //Act
             OkObjectResult results = (OkObjectResult)await _customerController.PlaceOrder(mock);
 
-            //Assert
             results.Value.Equals(mock);
             results.Should().NotBeNull();
             results.Value.Should().BeAssignableTo<IEnumerable<OrderDTO>>();
@@ -89,7 +81,6 @@ namespace Controllers.test
         [Fact]
         public async Task PlaceOrder_WithInvalidData_ReturnsBadRequest()
         {
-            //Arrange
             var mock = _fixture.Create<List<GetOrderDTO>>();
             _serviceMock.Setup(x => x.PlaceOrder(mock));
 
