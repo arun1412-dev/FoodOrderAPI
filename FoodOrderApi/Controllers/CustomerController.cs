@@ -12,14 +12,14 @@ namespace FoodOrderApi.Controllers
     public class CustomerController : ControllerBase
     {
         private IDataProvider _dataProvider;
-        private readonly IMapper mapper;
-        private readonly ILogger logger;
+        private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
         public CustomerController(IDataProvider dataProvider, IMapper mapper, ILogger<CustomerController> logger)
         {
             _dataProvider = dataProvider;
-            this.mapper = mapper;
-            this.logger = logger;
+            this._mapper = mapper;
+            this._logger = logger;
         }
 
         [HttpPost("PlaceOrder")]
@@ -30,11 +30,11 @@ namespace FoodOrderApi.Controllers
             var OrderDetails = await _dataProvider.PlaceOrder(newCustomerOrder);
             if (OrderDetails == null)
             {
-                logger.LogError("Can't able to add data as they are invalid.");
+                _logger.LogError("Can't able to add data as they are invalid.");
                 return BadRequest();
             }
-            logger.LogInformation("Data added to the Orders Table.");
-            return Ok(mapper.Map<List<OrderDTO>>(OrderDetails));
+            _logger.LogInformation("Data added to the Orders Table.");
+            return Ok(_mapper.Map<List<OrderDTO>>(OrderDetails));
         }
 
         [HttpGet("Orders/{customerName}")]
@@ -43,11 +43,11 @@ namespace FoodOrderApi.Controllers
             var getOrders = await _dataProvider.GetOrderByName(customerName);
             if (!getOrders.Any())
             {
-                logger.LogInformation("Orders not found for the particular person.");
+                _logger.LogInformation("Orders not found for the particular person.");
                 return NotFound("Orders not found.");
             }
-            logger.LogInformation("Data fetched from the Orders Table.");
-            return Ok(mapper.Map<IEnumerable<OrderDTO>>(getOrders));
+            _logger.LogInformation("Data fetched from the Orders Table.");
+            return Ok(_mapper.Map<IEnumerable<OrderDTO>>(getOrders));
         }
     }
 }

@@ -11,29 +11,29 @@ using Moq;
 
 namespace FoodOrderApi.TestApi.Services
 {
-    public class TestRestaurantServices : IDisposable
+    public class RestaurantServiceTests : IDisposable
     {
         protected readonly FakeFoodApiDbContext _context;
-        private IMapper mapperMock;
-        private Mock<ILogger<RestaurantController>> loggerMock;
+        private IMapper _mapperMock;
+        private Mock<ILogger<RestaurantController>> _loggerMock;
 
-        public TestRestaurantServices()
+        public RestaurantServiceTests()
         {
             var options = new DbContextOptionsBuilder<FakeFoodApiDbContext>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             _context = new FakeFoodApiDbContext(options);
-            if (mapperMock == null)
+            if (_mapperMock == null)
             {
                 var mappingConfig = new MapperConfiguration(mc =>
                 {
                     mc.AddProfile(new AutoMapperProfiles());
                 });
                 IMapper mapper = mappingConfig.CreateMapper();
-                mapperMock = mapper;
+                _mapperMock = mapper;
             }
-            loggerMock = new Mock<ILogger<RestaurantController>>();
+            _loggerMock = new Mock<ILogger<RestaurantController>>();
 
             _context.Database.EnsureCreated();
         }
@@ -45,7 +45,7 @@ namespace FoodOrderApi.TestApi.Services
             _context.Restaurants.AddRange(RestaurantMockData.GetAllRestaurants());
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, mapperMock, loggerMock.Object);
+            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.GetRestaurant();
@@ -61,7 +61,7 @@ namespace FoodOrderApi.TestApi.Services
             _context.Menus.AddRange(RestaurantMockData.GetAllMenus());
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, mapperMock, loggerMock.Object);
+            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.GetMenus();
@@ -80,7 +80,7 @@ namespace FoodOrderApi.TestApi.Services
             _context.Restaurants.AddRange(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered));
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, mapperMock, loggerMock.Object);
+            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.FilterRestaurant(stringToBeFiltered);
@@ -98,7 +98,7 @@ namespace FoodOrderApi.TestApi.Services
             _context.Restaurants.AddRange(RestaurantMockData.GetFilteredRestaurants(stringToBeFiltered));
             await _context.SaveChangesAsync();
 
-            var sut = new DbDataProvider(_context, mapperMock, loggerMock.Object);
+            var sut = new DbDataProvider(_context, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.SearchMenuAndRestaurant(stringToBeFiltered);

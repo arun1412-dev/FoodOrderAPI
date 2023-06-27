@@ -9,11 +9,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{EBF81D55-280
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CB09A498-7035-4D11-A583-DBDFA2C2BEF5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodOrder.TestApi", "FoodOrder.TestApi\FoodOrder.TestApi.csproj", "{CA2D9685-EAFB-4E99-AC71-70726BF1AA90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantUnitTest", "FoodOrder.TestApi\RestaurantUnitTest.csproj", "{CA2D9685-EAFB-4E99-AC71-70726BF1AA90}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Controllers.test", "Controllers.test\Controllers.test.csproj", "{148D85CB-4ED9-486C-B13E-BF4DE7FB0544}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomerUnitTest", "Controllers.test\CustomerUnitTest.csproj", "{148D85CB-4ED9-486C-B13E-BF4DE7FB0544}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{AFC92067-3B9D-4D1C-A649-BA2BFC8FF292}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminUnitTest", "UnitTests\AdminUnitTest.csproj", "{AFC92067-3B9D-4D1C-A649-BA2BFC8FF292}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
