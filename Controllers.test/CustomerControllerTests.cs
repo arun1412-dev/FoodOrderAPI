@@ -12,28 +12,29 @@ using Moq;
 
 namespace Controllers.test
 {
-    public class CustomerController_UnitTesting
+    public class CustomerControllerTests
     {
         private readonly IFixture _fixture;
         private readonly Mock<IDataProvider> _serviceMock;
         private readonly CustomerController _sut;
-        private readonly IMapper mapper;
-        private readonly ILogger<CustomerController> logger;
+        private readonly IMapper _mapper;
+        private readonly ILogger<CustomerController> _logger;
 
-        public CustomerController_UnitTesting()
+        public CustomerControllerTests()
         {
             _fixture = new Fixture();
             _serviceMock = _fixture.Freeze<Mock<IDataProvider>>();
-            mapper = _fixture.Freeze<Mock<IMapper>>().Object;
-            logger = Mock.Of<ILogger<CustomerController>>();
+            this._mapper = _fixture.Freeze<Mock<IMapper>>().Object;
+            _logger = Mock.Of<ILogger<CustomerController>>();
             var mappingConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfiles());
             });
             IMapper _mapper = mappingConfig.CreateMapper();
-            mapper = _mapper;
-            _sut = new CustomerController(_serviceMock.Object, mapper, logger);
+            this._mapper = _mapper;
+            _sut = new CustomerController(_serviceMock.Object, this._mapper, _logger);
         }
+
         [Fact]
         public async Task GetOrderByName_WithValidCustomerName_ReturnsOkResult()
         {
@@ -84,6 +85,7 @@ namespace Controllers.test
             results.Value.Should().BeAssignableTo<IEnumerable<OrderDTO>>();
             results.Should().BeAssignableTo<OkObjectResult>();
         }
+
         [Fact]
         public async Task PlaceOrder_WithInvalidData_ReturnsBadRequest()
         {
@@ -98,6 +100,5 @@ namespace Controllers.test
             results.Should().NotBeNull();
             results.Result.Should().BeAssignableTo<BadRequestResult>();
         }
-
     }
 }

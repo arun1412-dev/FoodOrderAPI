@@ -15,16 +15,16 @@ namespace FoodOrderApi.Controllers
     public class AdminController : ControllerBase
     {
         private IDataProvider _dataProvider;
-        private readonly IMapper mapper;
-        private readonly ILogger logger;
+        private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
         public IDataProvider Object { get; }
 
         public AdminController(IDataProvider dataProvider, IMapper mapper, ILogger<AdminController> logger)
         {
             _dataProvider = dataProvider;
-            this.mapper = mapper;
-            this.logger = logger;
+            this._mapper = mapper;
+            this._logger = logger;
         }
 
         [HttpDelete("DeleteMenu/{MenuID:Guid}")]
@@ -33,12 +33,12 @@ namespace FoodOrderApi.Controllers
             var IsDeleted = _dataProvider.DeleteMenu(MenuID);
             if (IsDeleted.Result)
             {
-                logger.LogInformation("Menu removed from the hotel");
+                _logger.LogInformation("Menu removed from the hotel");
                 return Ok("Menu removed from the hotel");
             }
             else
             {
-                logger.LogInformation("Can't able to found the menu");
+                _logger.LogInformation("Can't able to found the menu");
                 return BadRequest("Can't able to found the menu");
             }
         }
@@ -49,12 +49,12 @@ namespace FoodOrderApi.Controllers
             var IsDelivered = _dataProvider.OrderDelivered(orderId);
             if (IsDelivered.Result)
             {
-                logger.LogInformation("Order delivered and changed in the database.");
+                _logger.LogInformation("Order delivered and changed in the database.");
                 return Ok("Success");
             }
             else
             {
-                logger.LogInformation("Order not found.");
+                _logger.LogInformation("Order not found.");
                 return NotFound("Can't able to find the Order.");
             }
         }
@@ -78,7 +78,7 @@ namespace FoodOrderApi.Controllers
             var status = await _dataProvider.PatchMenuItems(RestaurantID, jsonPatchDocument);
             if (status != null)
             {
-                var statusDTO = mapper.Map<MenuDTO>(status);
+                var statusDTO = _mapper.Map<MenuDTO>(status);
                 return Ok(statusDTO);
             }
             return BadRequest();

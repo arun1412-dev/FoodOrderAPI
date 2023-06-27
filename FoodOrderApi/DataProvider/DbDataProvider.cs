@@ -12,31 +12,31 @@ namespace FoodOrderApi.DataProvider
 {
     public class DbDataProvider : Controller, IDataProvider
     {
-        private readonly IDbProvider foodApiDbContext;
-        private readonly IMapper mapper;
-        private readonly ILogger<RestaurantController> logger;
+        private readonly IDbProvider _foodApiDbContext;
+        private readonly IMapper _mapper;
+        private readonly ILogger<RestaurantController> _logger;
 
         public DbDataProvider(IDbProvider foodApiDbContext, IMapper mapper, ILogger<RestaurantController> logger)
         {
-            this.foodApiDbContext = foodApiDbContext;
-            this.mapper = mapper;
-            this.logger = logger;
+            this._foodApiDbContext = foodApiDbContext;
+            this._mapper = mapper;
+            this._logger = logger;
         }
 
         public async Task<IEnumerable<Menu>> GetMenus()
         {
-            return await foodApiDbContext.Menus.Include("Restaurant").ToListAsync();
+            return await _foodApiDbContext.Menus.Include("Restaurant").ToListAsync();
         }
 
         public async Task<IEnumerable<Order>?> GetOrderByName(string customerName)
         {
-            return await foodApiDbContext.Orders.Where(item => item.CustomerName == customerName).Include("Menu").Include("Restaurant").ToListAsync();
+            return await _foodApiDbContext.Orders.Where(item => item.CustomerName == customerName).Include("Menu").Include("Restaurant").ToListAsync();
         }
 
         public async Task<RestaurantsandMenus> SearchMenuAndRestaurant(string searchString)
         {
-            var restaurants = foodApiDbContext.Restaurants.AsQueryable();
-            var menus = foodApiDbContext.Menus.AsQueryable();
+            var restaurants = _foodApiDbContext.Restaurants.AsQueryable();
+            var menus = _foodApiDbContext.Menus.AsQueryable();
             restaurants = restaurants.Where(x => x.RestaurantName.ToLower().Contains(searchString.ToLower()));
             menus = menus.Where(x => x.ProductName.ToLower().Contains(searchString.ToLower())).Include("Restaurant");
             RestaurantsandMenus restaurantsandMenus = new RestaurantsandMenus();
@@ -47,21 +47,21 @@ namespace FoodOrderApi.DataProvider
 
         public async Task<IEnumerable<Restaurant>> FilterRestaurant(string? filterString = null)
         {
-            var restaurants = foodApiDbContext.Restaurants.AsQueryable();
+            var restaurants = _foodApiDbContext.Restaurants.AsQueryable();
             if (filterString != null)
             {
                 restaurants = restaurants.Where(x => x.RestaurantName.ToLower().Contains(filterString.ToLower()));
-                logger.LogInformation("Data fetched from the restaurant table.");
+                _logger.LogInformation("Data fetched from the restaurant table.");
             }
             return await restaurants.ToListAsync();
         }
 
         public async Task<(IEnumerable<Restaurant>, PaginationMetadata)> GetRestaurantPaged(int pageNumber, int pageSize)
         {
-            var productsCount = await foodApiDbContext.Restaurants.CountAsync();
+            var productsCount = await _foodApiDbContext.Restaurants.CountAsync();
             var paginationMetadata = new PaginationMetadata(productsCount, pageSize, pageNumber);
 
-            var paginatedProducts = await foodApiDbContext.Restaurants
+            var paginatedProducts = await _foodApiDbContext.Restaurants
                 .Skip(pageSize * (pageNumber - 1))
                 .Take(pageSize)
                 .ToListAsync();
@@ -70,7 +70,7 @@ namespace FoodOrderApi.DataProvider
 
         public async Task<IList<string>?> GetRestaurantWithMenu(string restaurantName)
         {
-            var getParticularRestaurant = await (foodApiDbContext.RestaurantWithMenus.FirstOrDefaultAsync(item => item.RestaurantName.ToLower() == restaurantName.ToLower()));
+            var getParticularRestaurant = await (_foodApiDbContext.RestaurantWithMenus.FirstOrDefaultAsync(item => item.RestaurantName.ToLower() == restaurantName.ToLower()));
             if (getParticularRestaurant != null)
             {
                 return getParticularRestaurant.Menus;
@@ -92,12 +92,12 @@ namespace FoodOrderApi.DataProvider
                     var products = (await GetMenus()).Where(item => (item.ProductName.ToLower() == customerOrder.ProductName.ToLower()) && (item.RestaurantID == restaurants[0].RestaurantID)).ToList();
                     if (products.Count() > 0)
                     {
-                        var newOrder = mapper.Map<Order>(customerOrder);
+                        var newOrder = _mapper.Map<Order>(customerOrder);
                         newOrder.RestaurantID = products[0].RestaurantID;
                         newOrder.ProductID = products[0].ProductID;
                         newOrder.IsDelivered = false;
-                        await foodApiDbContext.Orders.AddAsync(newOrder);
-                        await foodApiDbContext.SaveChangesAsync();
+                        await _foodApiDbContext.Orders.AddAsync(newOrder);
+                        await _foodApiDbContext.SaveChangesAsync();
                         orderList.Add(newOrder);
                     }
                     else
@@ -115,50 +115,50 @@ namespace FoodOrderApi.DataProvider
 
         public async Task<bool> OrderDelivered(Guid CustomerOrderId)
         {
-            var CustomerOrder = await foodApiDbContext.Orders.FirstOrDefaultAsync(item => item.Id == CustomerOrderId);
+            var CustomerOrder = await _foodApiDbContext.Orders.FirstOrDefaultAsync(item => item.Id == CustomerOrderId);
             if (CustomerOrder == null)
             {
                 return false;
             }
             CustomerOrder.IsDelivered = true;
-            await foodApiDbContext.SaveChangesAsync();
+            await _foodApiDbContext.SaveChangesAsync();
             return true;
         }
 
         public async Task<IEnumerable<Restaurant>> GetRestaurant()
         {
-            return await foodApiDbContext.Restaurants.ToListAsync();
+            return await _foodApiDbContext.Restaurants.ToListAsync();
         }
 
         public async Task<bool> Discount(Guid restaurantID, Guid productID, double discount)
         {
             
-            var menu = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == restaurantID && x.ProductID == productID);
+            var menu = await _foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == restaurantID && x.ProductID == productID);
             if(menu == null)
             {
                 return false;
             }
             menu.ProductOffer = discount;
-            await foodApiDbContext.SaveChangesAsync();
+            await _foodApiDbContext.SaveChangesAsync();
             return true;
 
         }
 
         public async Task<bool> DeleteMenu(Guid MenuID)
         {
-            var Menu = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.ProductID == MenuID);
+            var Menu = await _foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.ProductID == MenuID);
             if (Menu == null)
             {
                 return false;
             }
-            foodApiDbContext.Menus.Remove(Menu);
-            await foodApiDbContext.SaveChangesAsync();
+            _foodApiDbContext.Menus.Remove(Menu);
+            await _foodApiDbContext.SaveChangesAsync();
             return true;
         }
 
         public async Task<Menu> PatchMenuItems(Guid RestaurantID, JsonPatchDocument<Menu> jsonPatchDocument)
         {
-            var restaurantMenus = await foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
+            var restaurantMenus = await _foodApiDbContext.Menus.FirstOrDefaultAsync(x => x.RestaurantID == RestaurantID);
 
             if (restaurantMenus != null)
             {
@@ -166,8 +166,8 @@ namespace FoodOrderApi.DataProvider
                 jsonPatchDocument.ApplyTo(newMenu, ModelState);
                 newMenu.ProductID = Guid.NewGuid();
                 newMenu.RestaurantID = RestaurantID;
-                foodApiDbContext.Menus.Update(newMenu);
-                await foodApiDbContext.SaveChangesAsync();
+                _foodApiDbContext.Menus.Update(newMenu);
+                await _foodApiDbContext.SaveChangesAsync();
                 if (!ModelState.IsValid)
                 {
                     return null;

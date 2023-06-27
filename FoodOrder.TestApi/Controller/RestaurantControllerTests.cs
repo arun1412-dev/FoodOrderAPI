@@ -13,24 +13,23 @@ using System.Net;
 
 namespace FoodOrderApi.TestApi.Controller
 {
-    public class TestRestaurantController
+    public class RestaurantControllerTests
     {
-        private Mock<IDataProvider> restaurantService;
-        private IMapper mapperMock;
-        private Mock<ILogger<RestaurantController>> loggerMock;
-
-        public TestRestaurantController()
+        private Mock<IDataProvider> _restaurantService;
+        private IMapper _mapperMock;
+        private Mock<ILogger<RestaurantController>> _loggerMock;
+        public RestaurantControllerTests()
         {
-            restaurantService = new Mock<IDataProvider>();
-            loggerMock = new Mock<ILogger<RestaurantController>>();
-            if (mapperMock == null)
+            _restaurantService = new Mock<IDataProvider>();
+            _loggerMock = new Mock<ILogger<RestaurantController>>();
+            if (_mapperMock == null)
             {
                 var mappingConfig = new MapperConfiguration(mc =>
                 {
                     mc.AddProfile(new AutoMapperProfiles());
                 });
                 IMapper mapper = mappingConfig.CreateMapper();
-                mapperMock = mapper;
+                _mapperMock = mapper;
             }
         }
 
@@ -40,8 +39,8 @@ namespace FoodOrderApi.TestApi.Controller
         public async Task Get_AllRestaurantPaginationWithValidIndex__ShouldReturn200Status(int pageNumber, int pageSize)
         {
             /// Arrange
-            restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
-            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            _restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
+            var sut = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
             sut.ControllerContext = new ControllerContext();
             sut.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -59,8 +58,8 @@ namespace FoodOrderApi.TestApi.Controller
         public async Task Get_AllRestaurantPaginationWithInvalidIndex__ShouldReturn404Status(int pageNumber, int pageSize)
         {
             /// Arrange
-            restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
-            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            _restaurantService.Setup(_ => _.GetRestaurantPaged(pageNumber, pageSize)).ReturnsAsync(RestaurantMockData.GetRestaurantPaged(pageNumber, pageSize));
+            var sut = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
             sut.ControllerContext = new ControllerContext();
             sut.ControllerContext.HttpContext = new DefaultHttpContext();
 
@@ -78,8 +77,8 @@ namespace FoodOrderApi.TestApi.Controller
         public async Task GetFilteredRestaurant_ShouldReturn200Status(string filterString)
         {
             /// Arrange
-            restaurantService.Setup(_ => _.FilterRestaurant(filterString)).ReturnsAsync(RestaurantMockData.GetFilteredRestaurants(filterString));
-            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            _restaurantService.Setup(_ => _.FilterRestaurant(filterString)).ReturnsAsync(RestaurantMockData.GetFilteredRestaurants(filterString));
+            var sut = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.GetRestaurantByName(filterString);
@@ -94,8 +93,8 @@ namespace FoodOrderApi.TestApi.Controller
         public async Task SearchRestaurantandMenu_ValidSearchString_ShouldReturn200Status(string searchString)
         {
             /// Arrange
-            restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
-            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            _restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
+            var sut = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.SearchRestaurantandMenu(searchString);
@@ -109,8 +108,8 @@ namespace FoodOrderApi.TestApi.Controller
         public async Task SearchRestaurantandMenu_InvalidSearchString_ShouldReturn404Status(string searchString)
         {
             /// Arrange
-            restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
-            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            _restaurantService.Setup(_ => _.SearchMenuAndRestaurant(searchString)).ReturnsAsync(RestaurantMockData.GetSearchRestaurantAndMenu(searchString));
+            var sut = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.SearchRestaurantandMenu(searchString);
@@ -123,8 +122,8 @@ namespace FoodOrderApi.TestApi.Controller
         public async Task Get_AllMenu_ShouldReturn200Status()
         {
             /// Arrange
-            restaurantService.Setup(_ => _.GetMenus()).ReturnsAsync(RestaurantMockData.GetAllMenus());
-            var sut = new RestaurantController(restaurantService.Object, mapperMock, loggerMock.Object);
+            _restaurantService.Setup(_ => _.GetMenus()).ReturnsAsync(RestaurantMockData.GetAllMenus());
+            var sut = new RestaurantController(_restaurantService.Object, _mapperMock, _loggerMock.Object);
 
             /// Act
             var result = await sut.GetMenu();
