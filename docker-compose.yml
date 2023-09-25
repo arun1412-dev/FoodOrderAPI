@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+  demodb:
+    container_name: app-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+     - 8002:1433
+    environment:
+     - ACCEPT_EULA=Y
+     - MSSQL_SA_PASSWORD=password@123
+ 
+  foodorderapi:
+    image: ${DOCKER_REGISTRY-}foodorderapi
+    build:
+      context: .
+      dockerfile: FoodOrderApi\Dockerfile
+    ports:
+      - 8001:80
+    depends_on:
+      - demodb
